@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETP172 Exam Prep App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation Bar -->
+        <nav id="navbar" class="hidden">
+            <div class="nav-container">
+                <span class="nav-title">ETP172 Exam Prep</span>
+                <button id="back-to-menu" class="btn-small">Main Menu</button>
+            </div>
+        </nav>
+
+        <!-- Landing Screen -->
+        <section id="landing-screen" class="screen">
+            <div class="card">
+                <h1>ETP172 Exam Preparation</h1>
+                <p>Welcome to your interactive study assistant. Choose a mode to begin your preparation for the university-level exam.</p>
+                <div class="menu-options">
+                    <button id="start-quiz" class="btn-large">
+                        <span class="btn-title">Interactive Quiz</span>
+                        <span class="btn-desc">Test your knowledge with 33 comprehensive questions from Section A.</span>
+                    </button>
+                    <button id="start-story" class="btn-large">
+                        <span class="btn-title">Essay Story Mode</span>
+                        <span class="btn-desc">Master the Critical Theory essay through a sequential narrative flow.</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Screen -->
+        <section id="quiz-screen" class="screen hidden">
+            <div class="container">
+                <div class="quiz-header">
+                    <div class="progress-info">
+                        Question <span id="current-question-num">1</span> of 33
+                    </div>
+                    <div class="score-info">
+                        Score: <span id="current-score">0</span>
+                    </div>
+                </div>
+                <div id="question-container" class="card">
+                    <h2 id="question-text">Question text goes here?</h2>
+                    <div id="answer-options" class="options-grid">
+                        <!-- Options will be generated here -->
+                    </div>
+                    <div class="quiz-actions">
+                        <button id="hint-btn" class="btn-secondary">Show Hint</button>
+                        <button id="next-question-btn" class="btn-primary hidden">Next Question</button>
+                    </div>
+                    <div id="hint-box" class="info-box hidden">
+                        <strong>Hint:</strong> <span id="hint-text"></span>
+                    </div>
+                    <div id="feedback-box" class="info-box hidden">
+                        <h3 id="feedback-title">Correct!</h3>
+                        <p id="rationale-text"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Screen -->
+        <section id="results-screen" class="screen hidden">
+            <div class="card text-center">
+                <h2>Quiz Completed!</h2>
+                <div class="result-circle">
+                    <span id="final-percentage">0%</span>
+                </div>
+                <p>You scored <span id="final-score">0</span> out of 33.</p>
+                <button id="retake-quiz" class="btn-primary">Retake Test</button>
+            </div>
+        </section>
+
+        <!-- Story Screen -->
+        <section id="story-screen" class="screen hidden">
+            <div class="container">
+                <div class="story-header">
+                    <h2>Essay Story Mode: Critical Theory</h2>
+                    <div class="progress-bar-container">
+                        <div id="story-progress-bar" class="progress-bar"></div>
+                    </div>
+                </div>
+                <div id="story-content" class="story-container">
+                    <!-- Story segments will appear here -->
+                </div>
+                <div class="story-actions">
+                    <button id="next-story-btn" class="btn-primary">Next</button>
+                    <button id="restart-story-btn" class="btn-secondary hidden">Restart Story</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
