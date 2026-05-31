@@ -509,6 +509,7 @@ const backToMenuBtn = document.getElementById('back-to-menu');
 // Landing
 const startQuizBtn = document.getElementById('start-quiz');
 const startStoryBtn = document.getElementById('start-story');
+const startSkeletonBtn = document.getElementById('start-skeleton');
 const startOpenEndedBtn = document.getElementById('start-open-ended');
 
 // Quiz
@@ -736,6 +737,18 @@ function nextStorySegment() {
     }
 }
 
+function initSkeletonOnly() {
+    // Show the story screen first
+    showScreen('story');
+    
+    // Set up the UI for Skeleton Mode specifically
+    storyContent.classList.add('hidden');
+    nextStoryBtn.classList.add('hidden');
+    
+    // Trigger the builder initialization
+    initSkeletonBuilder();
+}
+
 function initSkeletonBuilder() {
     currentState.story.phase = 'builder';
     currentState.story.userSequence = [];
@@ -905,6 +918,7 @@ function handleOEReveal() {
  */
 startQuizBtn.onclick = initQuiz;
 startStoryBtn.onclick = initStory;
+startSkeletonBtn.onclick = initSkeletonOnly;
 startOpenEndedBtn.onclick = initOpenEnded;
 backToMenuBtn.onclick = () => showScreen('landing');
 
