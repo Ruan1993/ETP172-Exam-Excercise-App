@@ -21,6 +21,10 @@
       <!-- Landing Screen -->
       <section id="landing-screen" class="screen">
         <div class="card">
+          <div id="exam-countdown" class="countdown-container">
+            <span class="countdown-label">Days until Exam:</span>
+            <span id="days-left" class="countdown-value">--</span>
+          </div>
           <div class="landing-header">
             <div class="main-logo">ETP172 Exam Exercise</div>
             <h1>Exam Preparation</h1>
@@ -131,8 +135,13 @@
             <div class="progress-info">
               Question <span id="current-question-num">1</span> of 33
             </div>
-            <div class="score-info">
-              Score: <span id="current-score">0</span>
+            <div class="quiz-stats">
+              <div class="stat-item streak-stat">
+                🔥 Streak: <span id="current-streak">0</span>
+              </div>
+              <div class="stat-item score-stat">
+                Score: <span id="current-score">0</span>
+              </div>
             </div>
           </div>
           <div id="question-container" class="card">
@@ -320,6 +329,16 @@
         <p>&copy; 2026 Created by Ruan Coetzee</p>
       </div>
     </footer>
+
+    <div id="achievement-popup" class="achievement-popup hidden">
+      <div class="achievement-content">
+        <div class="achievement-icon">🏆</div>
+        <div class="achievement-text">
+          <h3>Achievement Unlocked!</h3>
+          <p id="achievement-name">Master of Structure</p>
+        </div>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>

@@ -492,6 +492,7 @@ let currentState = {
         questions: [],
         currentIndex: 0,
         score: 0,
+        streak: 0,
         answered: false,
         hintShown: false
     },
@@ -573,6 +574,12 @@ const arAutoPlayToggle = document.getElementById('ar-auto-play-toggle');
 const arControlBtn = document.getElementById('ar-control-btn');
 const arNextBtn = document.getElementById('ar-next-btn');
 
+// Gamification
+const currentStreakEl = document.getElementById('current-streak');
+const daysLeftEl = document.getElementById('days-left');
+const achievementPopup = document.getElementById('achievement-popup');
+const achievementNameEl = document.getElementById('achievement-name');
+
 // Story
 const storyContent = document.getElementById('story-content');
 const nextStoryBtn = document.getElementById('next-story-btn');
@@ -641,6 +648,7 @@ function initQuiz() {
     });
     currentState.quiz.currentIndex = 0;
     currentState.quiz.score = 0;
+    currentState.quiz.streak = 0;
     currentState.quiz.answered = false;
     currentState.quiz.hintShown = false;
     
@@ -654,6 +662,7 @@ function renderQuestion() {
     // Update UI
     questionNumEl.textContent = currentState.quiz.currentIndex + 1;
     currentScoreEl.textContent = currentState.quiz.score;
+    currentStreakEl.textContent = currentState.quiz.streak;
     questionTextEl.textContent = question.question;
     
     // Clear and render options
@@ -691,10 +700,12 @@ function handleAnswer(optionIndex) {
     if (selectedOption.isCorrect) {
         optionBtns[optionIndex].classList.add('correct');
         currentState.quiz.score++;
+        currentState.quiz.streak++;
         feedbackTitle.textContent = "Correct!";
         feedbackBox.classList.remove('incorrect');
     } else {
         optionBtns[optionIndex].classList.add('incorrect');
+        currentState.quiz.streak = 0;
         // Find and highlight correct one
         const correctIndex = question.options.findIndex(o => o.isCorrect);
         optionBtns[correctIndex].classList.add('correct');
@@ -708,6 +719,7 @@ function handleAnswer(optionIndex) {
     
     // Update score display
     currentScoreEl.textContent = currentState.quiz.score;
+    currentStreakEl.textContent = currentState.quiz.streak;
     
     // Show next button
     nextQuestionBtn.classList.remove('hidden');
@@ -730,6 +742,10 @@ function showResults() {
     
     document.getElementById('final-score').textContent = score;
     document.getElementById('final-percentage').textContent = `${percentage}%`;
+    
+    if (percentage === 100) {
+        showAchievement("Perfect Score: Quiz Whiz");
+    }
     
     showScreen('results');
 }
@@ -875,6 +891,7 @@ function checkStructure() {
     
     if (isCorrect) {
         showBuilderFeedback("Mastery Complete! You have internalized the structural flow of the essay.", 'correct');
+        showAchievement("Master of Structure");
         checkStructureBtn.classList.add('hidden');
         restartStoryBtn.classList.add('hidden');
         
@@ -902,6 +919,44 @@ function showBuilderFeedback(message, type) {
 function updateStoryProgress() {
     const progress = ((currentState.story.currentIndex + 1) / appData.story.length) * 100;
     storyProgressBar.style.width = `${progress}%`;
+}
+
+/**
+ * Gamification Features
+ */
+function updateExamCountdown() {
+    // Setting exam date to June 15, 2026 (placeholder - adjust as needed)
+    const examDate = new Date('June 15, 2026').getTime();
+    const now = new Date().getTime();
+    const distance = examDate - now;
+    
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    
+    if (daysLeftEl) {
+        if (days > 0) {
+            daysLeftEl.textContent = days;
+        } else if (days === 0) {
+            daysLeftEl.textContent = "Today!";
+        } else {
+            daysLeftEl.textContent = "Completed";
+        }
+    }
+}
+
+function showAchievement(name) {
+    achievementNameEl.textContent = name;
+    achievementPopup.classList.remove('hidden');
+    achievementPopup.classList.remove('fade-out');
+    
+    // Play a simple sound or trigger vibration if mobile? 
+    // For now just the visual popup
+    
+    setTimeout(() => {
+        achievementPopup.classList.add('fade-out');
+        setTimeout(() => {
+            achievementPopup.classList.add('hidden');
+        }, 500);
+    }, 3000);
 }
 
 /**
@@ -1184,4 +1239,5 @@ checkStructureBtn.onclick = checkStructure;
 restartStoryBtn.onclick = initStory;
 
 // Initialize
+updateExamCountdown();
 showScreen('landing');

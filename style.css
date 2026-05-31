@@ -322,6 +322,106 @@ button {
 .mb-20 { margin-bottom: 20px; }
 .mt-20 { margin-top: 20px; }
 
+/* Gamification Styles */
+.countdown-container {
+    background: #fff5f5;
+    border: 1px solid #feb2b2;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.countdown-label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #c53030;
+}
+
+.countdown-value {
+    font-size: 1.2rem;
+    font-weight: 900;
+    color: #e53e3e;
+}
+
+.quiz-stats {
+    display: flex;
+    gap: 15px;
+}
+
+.stat-item {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.streak-stat {
+    background-color: #fffaf0;
+    color: #dd6b20;
+    border: 1px solid #fbd38d;
+}
+
+.score-stat {
+    background-color: #f0fff4;
+    color: #2f855a;
+    border: 1px solid #9ae6b4;
+}
+
+/* Achievement Popup */
+.achievement-popup {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2d3748;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: slideUpFade 0.5s ease-out forwards;
+}
+
+.achievement-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.achievement-icon {
+    font-size: 2rem;
+}
+
+.achievement-text h3 {
+    font-size: 1rem;
+    margin: 0;
+    color: #ecc94b;
+}
+
+.achievement-text p {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.9;
+}
+
+@keyframes slideUpFade {
+    0% { transform: translate(-50%, 100%); opacity: 0; }
+    100% { transform: translate(-50%, 0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.achievement-popup.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
 /* Footer */
 #main-footer {
     background-color: var(--primary-color);
