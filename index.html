@@ -50,6 +50,13 @@
                 >Jump straight to the essay structure challenge.</span
               >
             </button>
+            <button id="start-audio-review" class="btn-large">
+              <span class="btn-title">Audio Review (Section A)</span>
+              <span class="btn-desc"
+                >Hands-free study: Question-Pause-Answer loop. Perfect for
+                driving.</span
+              >
+            </button>
             <button id="start-open-ended" class="btn-large">
               <span class="btn-title">Open-Ended Practice</span>
               <span class="btn-desc"
@@ -162,6 +169,69 @@
         </div>
       </section>
 
+      <!-- Audio Review Screen -->
+      <section id="audio-review-screen" class="screen hidden">
+        <div class="container">
+          <div class="instruction-box">
+            <p>
+              <strong>Auto-Play Mode:</strong> This will read the question,
+              pause for you to think, and then read the correct answer. Perfect
+              for hands-free study while driving.
+            </p>
+          </div>
+          <div class="practice-header">
+            <div class="topic-info">
+              Audio Review: <span id="ar-current-num">1</span> of
+              <span id="ar-total-num">33</span>
+            </div>
+          </div>
+          <div class="card">
+            <div id="ar-status" class="ar-status-indicator">
+              Ready to start...
+            </div>
+            <h2 id="ar-question-text" class="mb-20">
+              Click Start to begin the audio loop.
+            </h2>
+
+            <div id="ar-answer-box" class="info-box hidden mt-20">
+              <h3>Correct Answer:</h3>
+              <p id="ar-answer-text"></p>
+            </div>
+
+            <div class="tts-controls">
+              <div class="control-group">
+                <label for="ar-speech-rate">Speech Speed:</label>
+                <input
+                  type="range"
+                  id="ar-speech-rate"
+                  min="0.5"
+                  max="1.2"
+                  step="0.1"
+                  value="0.8"
+                />
+                <span id="ar-rate-value">0.8x</span>
+              </div>
+              <div class="control-group">
+                <label class="toggle-container">
+                  <input type="checkbox" id="ar-auto-play-toggle" checked />
+                  <span class="toggle-slider"></span>
+                  <span class="toggle-label">Auto-Play Loop</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="practice-actions">
+              <button id="ar-control-btn" class="btn-primary">
+                Start Audio Review
+              </button>
+              <button id="ar-next-btn" class="btn-secondary hidden">
+                Next Question
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Story Screen -->
       <section id="story-screen" class="screen hidden">
         <div class="container">
@@ -173,8 +243,9 @@
           </div>
           <div id="skeleton-instruction" class="instruction-box hidden">
             <p>
-              <strong>Skeleton Builder:</strong> Click segments to order them
-              from Introduction to Conclusion. Check your structure.
+              <strong>Master the structure:</strong> Reorder these summary
+              labels to build the logical argument of your essay. This structure
+              is your roadmap for the exam!
             </p>
           </div>
           <div class="story-header">

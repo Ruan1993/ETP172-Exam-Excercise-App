@@ -466,6 +466,20 @@ const appData = {
         "However, the theory has its critics. Some argue it is too negative, focusing on problems without offering clear practical solutions. Others worry it rejects objective truth too strongly, making it hard to follow strict rules like CAPS.",
         "In a South African context with large classes and limited resources, applying 'problem-posing' methods every day can be difficult. Some also fear that constant criticism might make learners cynical rather than hopeful.",
         "In conclusion, while it has limitations, Critical Theory provides essential tools for understanding power in education. It supports South Africa's goals of transformation by helping learners become active citizens who question injustice and build a fairer society."
+    ],
+    skeletonSummary: [
+        "Introduction: Define Critical Theory & Power.",
+        "Origins: Frankfurt School & German Roots.",
+        "Core Philosophy: Society is not neutral.",
+        "The Nature of Truth: Constructed by Power.",
+        "Emancipation: The Main Goal.",
+        "Banking Model: Freire's Critique.",
+        "Problem-Posing: Freire's Alternative.",
+        "SA Context: Apartheid & Bantu Education.",
+        "Hidden Curriculum: Unspoken Power Lessons.",
+        "Active Learning: Engaging Social Issues.",
+        "Criticisms: Lack of Practical Solutions.",
+        "Conclusion: Active Citizens & Democracy."
     ]
 };
 
@@ -490,6 +504,12 @@ let currentState = {
         questions: [],
         currentIndex: 0,
         revealed: false
+    },
+    audioReview: {
+        questions: [],
+        currentIndex: 0,
+        isPlaying: false,
+        timeoutId: null
     }
 };
 
@@ -501,6 +521,7 @@ const screens = {
     quiz: document.getElementById('quiz-screen'),
     story: document.getElementById('story-screen'),
     openEnded: document.getElementById('open-ended-screen'),
+    audioReview: document.getElementById('audio-review-screen'),
     results: document.getElementById('results-screen')
 };
 const navbar = document.getElementById('navbar');
@@ -510,6 +531,7 @@ const backToMenuBtn = document.getElementById('back-to-menu');
 const startQuizBtn = document.getElementById('start-quiz');
 const startStoryBtn = document.getElementById('start-story');
 const startSkeletonBtn = document.getElementById('start-skeleton');
+const startAudioReviewBtn = document.getElementById('start-audio-review');
 const startOpenEndedBtn = document.getElementById('start-open-ended');
 
 // Quiz
@@ -537,6 +559,19 @@ const oeRevealBtn = document.getElementById('oe-reveal-btn');
 const oeAnswerBox = document.getElementById('oe-answer-box');
 const oeAnswerTextEl = document.getElementById('oe-answer-text');
 const oeNavInfo = document.querySelector('.navigation-info');
+
+// Audio Review
+const arCurrentNumEl = document.getElementById('ar-current-num');
+const arTotalNumEl = document.getElementById('ar-total-num');
+const arStatusEl = document.getElementById('ar-status');
+const arQuestionTextEl = document.getElementById('ar-question-text');
+const arAnswerBox = document.getElementById('ar-answer-box');
+const arAnswerTextEl = document.getElementById('ar-answer-text');
+const arSpeechRateInput = document.getElementById('ar-speech-rate');
+const arRateValueEl = document.getElementById('ar-rate-value');
+const arAutoPlayToggle = document.getElementById('ar-auto-play-toggle');
+const arControlBtn = document.getElementById('ar-control-btn');
+const arNextBtn = document.getElementById('ar-next-btn');
 
 // Story
 const storyContent = document.getElementById('story-content');
@@ -576,9 +611,11 @@ function shuffle(array) {
  * View Management
  */
 function showScreen(screenName) {
-    // Stop speech whenever switching screens
+    // Stop speech and clear timeouts whenever switching screens
     window.speechSynthesis.cancel();
     if (readAloudBtn) readAloudBtn.textContent = 'Read Aloud';
+    if (currentState.audioReview.timeoutId) clearTimeout(currentState.audioReview.timeoutId);
+    currentState.audioReview.isPlaying = false;
 
     Object.values(screens).forEach(screen => screen.classList.add('hidden'));
     screens[screenName].classList.remove('hidden');
@@ -779,6 +816,7 @@ function initSkeletonBuilder() {
     currentState.story.userSequence = [];
     
     storyContent.classList.add('hidden');
+    ttsControlsEl.classList.add('hidden');
     skeletonBuilderEl.classList.remove('hidden');
     storyInstructionEl.classList.add('hidden');
     skeletonInstructionEl.classList.remove('hidden');
@@ -786,8 +824,8 @@ function initSkeletonBuilder() {
     checkStructureBtn.classList.remove('hidden');
     restartStoryBtn.classList.remove('hidden');
     
-    // Prepare pool
-    const pool = appData.story.map((text, index) => ({ text, originalIndex: index }));
+    // Prepare pool from summary labels
+    const pool = appData.skeletonSummary.map((text, index) => ({ text, originalIndex: index }));
     shuffle(pool);
     
     segmentsPoolEl.innerHTML = '';
@@ -797,8 +835,7 @@ function initSkeletonBuilder() {
     pool.forEach(item => {
         const card = document.createElement('div');
         card.className = 'builder-card';
-        card.textContent = item.text.substring(0, 100) + '...';
-        card.title = item.text;
+        card.textContent = item.text;
         card.onclick = () => addToSequence(item, card);
         segmentsPoolEl.appendChild(card);
     });
@@ -812,7 +849,7 @@ function addToSequence(item, cardEl) {
     
     const placedCard = document.createElement('div');
     placedCard.className = 'placed-card';
-    placedCard.textContent = item.text.substring(0, 100) + '...';
+    placedCard.textContent = item.text;
     placedCard.setAttribute('data-index', currentState.story.userSequence.length);
     dropZoneEl.appendChild(placedCard);
     
@@ -821,11 +858,11 @@ function addToSequence(item, cardEl) {
 }
 
 function checkStructure() {
-    const total = appData.story.length;
+    const total = appData.skeletonSummary.length;
     const userCount = currentState.story.userSequence.length;
     
     if (userCount < total) {
-        showBuilderFeedback(`Please place all ${total} segments before checking.`, 'incorrect');
+        showBuilderFeedback(`Please place all ${total} summary labels before checking.`, 'incorrect');
         return;
     }
     
@@ -837,17 +874,17 @@ function checkStructure() {
     });
     
     if (isCorrect) {
-        showBuilderFeedback("Excellent! You have perfectly reconstructed the essay's logical flow.", 'correct');
+        showBuilderFeedback("Mastery Complete! You have internalized the structural flow of the essay.", 'correct');
         checkStructureBtn.classList.add('hidden');
         restartStoryBtn.classList.add('hidden');
-        // Change restart to "Return to Menu" or similar
+        
         const backBtn = document.createElement('button');
         backBtn.className = 'btn-primary';
         backBtn.textContent = 'Return to Menu';
         backBtn.onclick = () => showScreen('landing');
         builderFeedbackEl.appendChild(backBtn);
     } else {
-        showBuilderFeedback("The structure isn't quite right. The logical flow of Critical Theory is missing. Try again!", 'incorrect');
+        showBuilderFeedback("The structure isn't quite right. The logical flow of the essay roadmap is missing. Try again!", 'incorrect');
         const retryBtn = document.createElement('button');
         retryBtn.className = 'btn-secondary mt-20';
         retryBtn.textContent = 'Try Again';
@@ -865,6 +902,124 @@ function showBuilderFeedback(message, type) {
 function updateStoryProgress() {
     const progress = ((currentState.story.currentIndex + 1) / appData.story.length) * 100;
     storyProgressBar.style.width = `${progress}%`;
+}
+
+/**
+ * Audio Review Logic
+ */
+function initAudioReview() {
+    currentState.audioReview.questions = shuffle([...appData.quiz]);
+    currentState.audioReview.currentIndex = 0;
+    currentState.audioReview.isPlaying = false;
+    if (currentState.audioReview.timeoutId) clearTimeout(currentState.audioReview.timeoutId);
+    
+    arTotalNumEl.textContent = currentState.audioReview.questions.length;
+    renderARQuestion();
+    showScreen('audioReview');
+}
+
+function renderARQuestion() {
+    const question = currentState.audioReview.questions[currentState.audioReview.currentIndex];
+    arCurrentNumEl.textContent = currentState.audioReview.currentIndex + 1;
+    arQuestionTextEl.textContent = question.question;
+    arAnswerBox.classList.add('hidden');
+    arStatusEl.textContent = "Ready to start";
+    arControlBtn.textContent = "Start Audio Review";
+    arNextBtn.classList.add('hidden');
+}
+
+function toggleAudioReview() {
+    if (currentState.audioReview.isPlaying) {
+        stopAudioReview();
+    } else {
+        startAudioReview();
+    }
+}
+
+function startAudioReview() {
+    currentState.audioReview.isPlaying = true;
+    arControlBtn.textContent = "Stop Audio Review";
+    arNextBtn.classList.add('hidden');
+    playARSequence();
+}
+
+function stopAudioReview() {
+    currentState.audioReview.isPlaying = false;
+    window.speechSynthesis.cancel();
+    if (currentState.audioReview.timeoutId) clearTimeout(currentState.audioReview.timeoutId);
+    arControlBtn.textContent = "Start Audio Review";
+    arStatusEl.textContent = "Paused";
+}
+
+function playARSequence() {
+    if (!currentState.audioReview.isPlaying) return;
+
+    const question = currentState.audioReview.questions[currentState.audioReview.currentIndex];
+    const correctOption = question.options.find(o => o.isCorrect);
+
+    // 1. Read Question
+    arStatusEl.textContent = "Reading Question...";
+    speakText(question.question, () => {
+        if (!currentState.audioReview.isPlaying) return;
+
+        // 2. Pause 3 seconds
+        arStatusEl.textContent = "Thinking (3s)...";
+        currentState.audioReview.timeoutId = setTimeout(() => {
+            if (!currentState.audioReview.isPlaying) return;
+
+            // 3. Show and Read Answer
+            arAnswerBox.classList.remove('hidden');
+            arAnswerTextEl.textContent = `${correctOption.text}. ${correctOption.rationale}`;
+            arStatusEl.textContent = "Reading Answer...";
+            
+            speakText(`The correct answer is: ${correctOption.text}. ${correctOption.rationale}`, () => {
+                if (!currentState.audioReview.isPlaying) return;
+
+                // 4. Pause 5 seconds before next
+                arStatusEl.textContent = "Next in 5s...";
+                
+                if (arAutoPlayToggle.checked) {
+                    currentState.audioReview.timeoutId = setTimeout(() => {
+                        if (!currentState.audioReview.isPlaying) return;
+                        
+                        if (currentState.audioReview.currentIndex < currentState.audioReview.questions.length - 1) {
+                            currentState.audioReview.currentIndex++;
+                            renderARQuestion();
+                            playARSequence();
+                        } else {
+                            arStatusEl.textContent = "Review Completed!";
+                            stopAudioReview();
+                        }
+                    }, 5000);
+                } else {
+                    arStatusEl.textContent = "Ready for next question";
+                    arNextBtn.classList.remove('hidden');
+                    currentState.audioReview.isPlaying = false;
+                    arControlBtn.textContent = "Start Next Question";
+                }
+            });
+        }, 3000);
+    }, arSpeechRateInput.value);
+}
+
+function nextARQuestion() {
+    if (currentState.audioReview.currentIndex < currentState.audioReview.questions.length - 1) {
+        currentState.audioReview.currentIndex++;
+        renderARQuestion();
+        startAudioReview();
+    }
+}
+
+function speakText(text, onEndCallback, rate = 0.8) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'));
+    if (preferredVoice) utterance.voice = preferredVoice;
+    
+    utterance.rate = parseFloat(rate);
+    utterance.onend = onEndCallback;
+    window.speechSynthesis.speak(utterance);
 }
 
 /**
@@ -990,6 +1145,7 @@ function handleOEReveal() {
 startQuizBtn.onclick = initQuiz;
 startStoryBtn.onclick = initStory;
 startSkeletonBtn.onclick = initSkeletonOnly;
+startAudioReviewBtn.onclick = initAudioReview;
 startOpenEndedBtn.onclick = initOpenEnded;
 backToMenuBtn.onclick = () => showScreen('landing');
 
@@ -1009,6 +1165,13 @@ readAloudBtn.onclick = toggleReadAloud;
 speechRateInput.oninput = (e) => {
     rateValueEl.textContent = `${e.target.value}x`;
 };
+
+arSpeechRateInput.oninput = (e) => {
+    arRateValueEl.textContent = `${e.target.value}x`;
+};
+
+arControlBtn.onclick = toggleAudioReview;
+arNextBtn.onclick = nextARQuestion;
 
 oeQuestionSelector.onchange = (e) => {
     currentState.openEnded.currentIndex = parseInt(e.target.value);
