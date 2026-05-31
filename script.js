@@ -544,6 +544,10 @@ const nextStoryBtn = document.getElementById('next-story-btn');
 const readAloudBtn = document.getElementById('read-aloud-btn');
 const restartStoryBtn = document.getElementById('restart-story-btn');
 const storyProgressBar = document.getElementById('story-progress-bar');
+const ttsControlsEl = document.querySelector('.tts-controls');
+const speechRateInput = document.getElementById('speech-rate');
+const rateValueEl = document.getElementById('rate-value');
+const autoPlayToggle = document.getElementById('auto-play-toggle');
 const startBuilderBtn = document.getElementById('start-builder-btn');
 const checkStructureBtn = document.getElementById('check-structure-btn');
 const skeletonBuilderEl = document.getElementById('skeleton-builder');
@@ -707,6 +711,7 @@ function initStory() {
     
     storyContent.innerHTML = '';
     storyContent.classList.remove('hidden');
+    ttsControlsEl.classList.remove('hidden');
     skeletonBuilderEl.classList.add('hidden');
     builderFeedbackEl.classList.add('hidden');
     storyInstructionEl.classList.remove('hidden');
@@ -717,6 +722,7 @@ function initStory() {
     updateStoryProgress();
     
     nextStoryBtn.classList.remove('hidden');
+    readAloudBtn.classList.remove('hidden');
     startBuilderBtn.classList.add('hidden');
     checkStructureBtn.classList.add('hidden');
     restartStoryBtn.classList.add('hidden');
@@ -760,7 +766,9 @@ function initSkeletonOnly() {
     
     // Set up the UI for Skeleton Mode specifically
     storyContent.classList.add('hidden');
+    ttsControlsEl.classList.add('hidden');
     nextStoryBtn.classList.add('hidden');
+    readAloudBtn.classList.add('hidden');
     
     // Trigger the builder initialization
     initSkeletonBuilder();
@@ -879,7 +887,8 @@ function toggleReadAloud() {
     const preferredVoice = voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'));
     if (preferredVoice) utterance.voice = preferredVoice;
 
-    utterance.rate = 0.9; // Slightly slower for academic clarity
+    // Dynamic speech rate from slider
+    utterance.rate = parseFloat(speechRateInput.value);
     utterance.pitch = 1.0;
 
     utterance.onstart = () => {
@@ -888,6 +897,17 @@ function toggleReadAloud() {
 
     utterance.onend = () => {
         readAloudBtn.textContent = 'Read Aloud';
+        
+        // Auto-play next segment logic
+        if (autoPlayToggle.checked) {
+            setTimeout(() => {
+                // Only auto-play if we aren't at the end and still in story mode
+                if (currentState.story.currentIndex < appData.story.length - 1 && currentState.view === 'story') {
+                    nextStorySegment();
+                    toggleReadAloud();
+                }
+            }, 1000); // 1-second delay
+        }
     };
 
     window.speechSynthesis.speak(utterance);
@@ -985,6 +1005,10 @@ retakeQuizBtn.onclick = initQuiz;
 oeRevealBtn.onclick = handleOEReveal;
 
 readAloudBtn.onclick = toggleReadAloud;
+
+speechRateInput.oninput = (e) => {
+    rateValueEl.textContent = `${e.target.value}x`;
+};
 
 oeQuestionSelector.onchange = (e) => {
     currentState.openEnded.currentIndex = parseInt(e.target.value);
