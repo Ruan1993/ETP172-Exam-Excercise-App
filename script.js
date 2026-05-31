@@ -541,6 +541,7 @@ const oeNavInfo = document.querySelector('.navigation-info');
 // Story
 const storyContent = document.getElementById('story-content');
 const nextStoryBtn = document.getElementById('next-story-btn');
+const readAloudBtn = document.getElementById('read-aloud-btn');
 const restartStoryBtn = document.getElementById('restart-story-btn');
 const storyProgressBar = document.getElementById('story-progress-bar');
 const startBuilderBtn = document.getElementById('start-builder-btn');
@@ -571,6 +572,10 @@ function shuffle(array) {
  * View Management
  */
 function showScreen(screenName) {
+    // Stop speech whenever switching screens
+    window.speechSynthesis.cancel();
+    if (readAloudBtn) readAloudBtn.textContent = 'Read Aloud';
+
     Object.values(screens).forEach(screen => screen.classList.add('hidden'));
     screens[screenName].classList.remove('hidden');
     
@@ -692,6 +697,10 @@ function showResults() {
  * Story Logic
  */
 function initStory() {
+    // Stop any current speech when entering/restarting story mode
+    window.speechSynthesis.cancel();
+    readAloudBtn.textContent = 'Read Aloud';
+    
     currentState.story.currentIndex = 0;
     currentState.story.phase = 'review';
     currentState.story.userSequence = [];
@@ -725,6 +734,10 @@ function renderStorySegment() {
 }
 
 function nextStorySegment() {
+    // Stop speech when moving to the next segment
+    window.speechSynthesis.cancel();
+    readAloudBtn.textContent = 'Read Aloud';
+
     currentState.story.currentIndex++;
     if (currentState.story.currentIndex < appData.story.length) {
         renderStorySegment();
@@ -738,6 +751,10 @@ function nextStorySegment() {
 }
 
 function initSkeletonOnly() {
+    // Stop speech when entering skeleton builder
+    window.speechSynthesis.cancel();
+    readAloudBtn.textContent = 'Read Aloud';
+
     // Show the story screen first
     showScreen('story');
     
@@ -843,6 +860,40 @@ function updateStoryProgress() {
 }
 
 /**
+ * Text-to-Speech (TTS) Logic
+ */
+function toggleReadAloud() {
+    if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        readAloudBtn.textContent = 'Read Aloud';
+        return;
+    }
+
+    const currentText = appData.story[currentState.story.currentIndex];
+    if (!currentText) return;
+
+    const utterance = new SpeechSynthesisUtterance(currentText);
+    
+    // Optional: Select a clearer voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'));
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    utterance.rate = 0.9; // Slightly slower for academic clarity
+    utterance.pitch = 1.0;
+
+    utterance.onstart = () => {
+        readAloudBtn.textContent = 'Stop Reading';
+    };
+
+    utterance.onend = () => {
+        readAloudBtn.textContent = 'Read Aloud';
+    };
+
+    window.speechSynthesis.speak(utterance);
+}
+
+/**
  * Open-Ended Practice Logic
  */
 function initOpenEnded() {
@@ -932,6 +983,8 @@ nextQuestionBtn.onclick = nextQuestion;
 retakeQuizBtn.onclick = initQuiz;
 
 oeRevealBtn.onclick = handleOEReveal;
+
+readAloudBtn.onclick = toggleReadAloud;
 
 oeQuestionSelector.onchange = (e) => {
     currentState.openEnded.currentIndex = parseInt(e.target.value);

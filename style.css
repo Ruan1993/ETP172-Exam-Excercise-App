@@ -515,7 +515,21 @@ button {
 
 .story-actions {
     display: flex;
-    gap: 10px;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+#read-aloud-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#read-aloud-btn::before {
+    content: '🔊';
+    font-size: 1.1rem;
 }
 
 /* Results */
