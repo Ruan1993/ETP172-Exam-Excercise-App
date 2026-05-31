@@ -864,13 +864,16 @@ function initSkeletonBuilder() {
 function addToSequence(item, cardEl) {
     if (cardEl.classList.contains('selected')) return;
     
+    const currentIndex = currentState.story.userSequence.length;
+    const isCorrectNext = item.originalIndex === currentIndex;
+    
     cardEl.classList.add('selected');
-    currentState.story.userSequence.push({ ...item, cardEl });
+    currentState.story.userSequence.push({ ...item, cardEl, isCorrectNext });
     
     const placedCard = document.createElement('div');
-    placedCard.className = 'placed-card';
+    placedCard.className = `placed-card ${isCorrectNext ? 'correct' : 'incorrect'}`;
     placedCard.textContent = item.text;
-    placedCard.setAttribute('data-index', currentState.story.userSequence.length);
+    placedCard.setAttribute('data-index', currentIndex + 1);
     
     // Click to remove logic
     placedCard.onclick = () => removeFromSequence(item, placedCard);
@@ -879,6 +882,13 @@ function addToSequence(item, cardEl) {
     
     // Auto-scroll to bottom of drop zone
     dropZoneEl.scrollTop = dropZoneEl.scrollHeight;
+    
+    // Provide sequential guidance
+    if (!isCorrectNext) {
+        showBuilderFeedback("This doesn't seem to be the next logical step in the argument. Try removing it and picking another!", 'incorrect');
+    } else {
+        builderFeedbackEl.classList.add('hidden');
+    }
 }
 
 function removeFromSequence(item, placedCardEl) {
@@ -920,9 +930,9 @@ function checkStructure() {
         const isCorrect = item.originalIndex === index;
         if (!isCorrect) allCorrect = false;
         
-        // Highlight individual card
+        // Highlight individual card (using final-error for real red)
         placedCards[index].classList.remove('correct', 'incorrect');
-        placedCards[index].classList.add(isCorrect ? 'correct' : 'incorrect');
+        placedCards[index].classList.add(isCorrect ? 'correct' : 'final-error');
     });
     
     if (allCorrect) {

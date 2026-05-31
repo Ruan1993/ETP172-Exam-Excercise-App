@@ -583,7 +583,7 @@ button {
     position: relative;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: slideIn 0.3s ease;
+    animation: snapIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .placed-card:hover {
@@ -595,11 +595,41 @@ button {
 .placed-card.correct {
     border-color: var(--success-color) !important;
     background-color: #f0fff4;
+    box-shadow: 0 0 10px rgba(39, 174, 96, 0.2);
+}
+
+.placed-card.correct::after {
+    content: '✅';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
 }
 
 .placed-card.incorrect {
+    border-color: #ecc94b !important; /* Yellow for real-time warning */
+    background-color: #fffaf0;
+    box-shadow: 0 0 10px rgba(236, 201, 75, 0.2);
+}
+
+.placed-card.incorrect::after {
+    content: '⚠️';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem;
+}
+
+.placed-card.final-error {
     border-color: var(--error-color) !important;
     background-color: #fff5f5;
+}
+
+@keyframes snapIn {
+    0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .placed-card::before {
