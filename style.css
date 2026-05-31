@@ -555,41 +555,51 @@ button {
     cursor: pointer;
     font-size: 0.9rem;
     line-height: 1.4;
-    transition: var(--transition);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     user-select: none;
 }
 
-.builder-card:hover {
+.builder-card:hover:not(.selected) {
     border-color: var(--accent-color);
     background-color: #f0f7ff;
-}
-
-.drop-zone {
-    min-height: 400px;
-    border: 2px dashed #cbd5e0;
-    border-radius: var(--border-radius);
-    padding: 10px;
-    background-color: #f8fafc;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.15);
 }
 
 .builder-card.selected {
-    opacity: 0.5;
-    background-color: #edf2f7;
-    cursor: not-allowed;
+    opacity: 0.3;
+    filter: grayscale(1);
+    cursor: default;
+    pointer-events: none;
 }
 
 .placed-card {
     background: white;
-    padding: 10px;
-    border: 1px solid var(--accent-color);
+    padding: 12px;
+    border: 2px solid #e2e8f0;
     border-radius: var(--border-radius);
     font-size: 0.9rem;
     line-height: 1.4;
     position: relative;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     animation: slideIn 0.3s ease;
+}
+
+.placed-card:hover {
+    border-color: #cbd5e0;
+    background-color: #fff;
+    transform: scale(1.02);
+}
+
+.placed-card.correct {
+    border-color: var(--success-color) !important;
+    background-color: #f0fff4;
+}
+
+.placed-card.incorrect {
+    border-color: var(--error-color) !important;
+    background-color: #fff5f5;
 }
 
 .placed-card::before {

@@ -592,6 +592,7 @@ const rateValueEl = document.getElementById('rate-value');
 const autoPlayToggle = document.getElementById('auto-play-toggle');
 const startBuilderBtn = document.getElementById('start-builder-btn');
 const checkStructureBtn = document.getElementById('check-structure-btn');
+const resetBuilderBtn = document.getElementById('reset-builder-btn');
 const skeletonBuilderEl = document.getElementById('skeleton-builder');
 const segmentsPoolEl = document.getElementById('segments-pool');
 const dropZoneEl = document.getElementById('drop-zone');
@@ -778,6 +779,7 @@ function initStory() {
     readAloudBtn.classList.remove('hidden');
     startBuilderBtn.classList.add('hidden');
     checkStructureBtn.classList.add('hidden');
+    resetBuilderBtn.classList.add('hidden');
     restartStoryBtn.classList.add('hidden');
 }
 
@@ -822,6 +824,7 @@ function initSkeletonOnly() {
     ttsControlsEl.classList.add('hidden');
     nextStoryBtn.classList.add('hidden');
     readAloudBtn.classList.add('hidden');
+    resetBuilderBtn.classList.remove('hidden');
     
     // Trigger the builder initialization
     initSkeletonBuilder();
@@ -838,6 +841,7 @@ function initSkeletonBuilder() {
     skeletonInstructionEl.classList.remove('hidden');
     startBuilderBtn.classList.add('hidden');
     checkStructureBtn.classList.remove('hidden');
+    resetBuilderBtn.classList.remove('hidden');
     restartStoryBtn.classList.remove('hidden');
     
     // Prepare pool from summary labels
@@ -861,16 +865,43 @@ function addToSequence(item, cardEl) {
     if (cardEl.classList.contains('selected')) return;
     
     cardEl.classList.add('selected');
-    currentState.story.userSequence.push(item);
+    currentState.story.userSequence.push({ ...item, cardEl });
     
     const placedCard = document.createElement('div');
     placedCard.className = 'placed-card';
     placedCard.textContent = item.text;
     placedCard.setAttribute('data-index', currentState.story.userSequence.length);
+    
+    // Click to remove logic
+    placedCard.onclick = () => removeFromSequence(item, placedCard);
+    
     dropZoneEl.appendChild(placedCard);
     
     // Auto-scroll to bottom of drop zone
     dropZoneEl.scrollTop = dropZoneEl.scrollHeight;
+}
+
+function removeFromSequence(item, placedCardEl) {
+    // 1. Remove from data state
+    const index = currentState.story.userSequence.findIndex(s => s.originalIndex === item.originalIndex);
+    if (index === -1) return;
+    
+    const removedItem = currentState.story.userSequence.splice(index, 1)[0];
+    
+    // 2. Reactivate card in pool
+    removedItem.cardEl.classList.remove('selected');
+    
+    // 3. Remove from DOM
+    placedCardEl.remove();
+    
+    // 4. Re-index remaining placed cards
+    const remainingPlaced = dropZoneEl.querySelectorAll('.placed-card');
+    remainingPlaced.forEach((card, i) => {
+        card.setAttribute('data-index', i + 1);
+    });
+    
+    // 5. Hide feedback if it was shown
+    builderFeedbackEl.classList.add('hidden');
 }
 
 function checkStructure() {
@@ -882,17 +913,23 @@ function checkStructure() {
         return;
     }
     
-    let isCorrect = true;
+    let allCorrect = true;
+    const placedCards = dropZoneEl.querySelectorAll('.placed-card');
+    
     currentState.story.userSequence.forEach((item, index) => {
-        if (item.originalIndex !== index) {
-            isCorrect = false;
-        }
+        const isCorrect = item.originalIndex === index;
+        if (!isCorrect) allCorrect = false;
+        
+        // Highlight individual card
+        placedCards[index].classList.remove('correct', 'incorrect');
+        placedCards[index].classList.add(isCorrect ? 'correct' : 'incorrect');
     });
     
-    if (isCorrect) {
+    if (allCorrect) {
         showBuilderFeedback("Mastery Complete! You have internalized the structural flow of the essay.", 'correct');
         showAchievement("Master of Structure");
         checkStructureBtn.classList.add('hidden');
+        resetBuilderBtn.classList.add('hidden');
         restartStoryBtn.classList.add('hidden');
         
         const backBtn = document.createElement('button');
@@ -901,12 +938,7 @@ function checkStructure() {
         backBtn.onclick = () => showScreen('landing');
         builderFeedbackEl.appendChild(backBtn);
     } else {
-        showBuilderFeedback("The structure isn't quite right. The logical flow of the essay roadmap is missing. Try again!", 'incorrect');
-        const retryBtn = document.createElement('button');
-        retryBtn.className = 'btn-secondary mt-20';
-        retryBtn.textContent = 'Try Again';
-        retryBtn.onclick = initSkeletonBuilder;
-        builderFeedbackEl.appendChild(retryBtn);
+        showBuilderFeedback("The structure isn't quite right. Review the red-highlighted segments and try again!", 'incorrect');
     }
 }
 
@@ -925,8 +957,8 @@ function updateStoryProgress() {
  * Gamification Features
  */
 function updateExamCountdown() {
-    // Setting exam date to June 15, 2026 (placeholder - adjust as needed)
-    const examDate = new Date('June 15, 2026').getTime();
+    // Setting exam date to June 3, 2026
+    const examDate = new Date('June 3, 2026').getTime();
     const now = new Date().getTime();
     const distance = examDate - now;
     
@@ -1236,6 +1268,7 @@ oeQuestionSelector.onchange = (e) => {
 nextStoryBtn.onclick = nextStorySegment;
 startBuilderBtn.onclick = initSkeletonBuilder;
 checkStructureBtn.onclick = checkStructure;
+resetBuilderBtn.onclick = initSkeletonBuilder;
 restartStoryBtn.onclick = initStory;
 
 // Initialize
