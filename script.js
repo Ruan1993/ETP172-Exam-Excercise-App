@@ -592,6 +592,7 @@ const rateValueEl = document.getElementById('rate-value');
 const autoPlayToggle = document.getElementById('auto-play-toggle');
 const startBuilderBtn = document.getElementById('start-builder-btn');
 const checkStructureBtn = document.getElementById('check-structure-btn');
+const readStructureBtn = document.getElementById('read-structure-btn');
 const resetBuilderBtn = document.getElementById('reset-builder-btn');
 const skeletonBuilderEl = document.getElementById('skeleton-builder');
 const segmentsPoolEl = document.getElementById('segments-pool');
@@ -622,6 +623,7 @@ function showScreen(screenName) {
     // Stop speech and clear timeouts whenever switching screens
     window.speechSynthesis.cancel();
     if (readAloudBtn) readAloudBtn.textContent = 'Read Aloud';
+    if (readStructureBtn) readStructureBtn.textContent = 'Read Structure';
     if (currentState.audioReview.timeoutId) clearTimeout(currentState.audioReview.timeoutId);
     currentState.audioReview.isPlaying = false;
 
@@ -758,6 +760,7 @@ function initStory() {
     // Stop any current speech when entering/restarting story mode
     window.speechSynthesis.cancel();
     readAloudBtn.textContent = 'Read Aloud';
+    readStructureBtn.classList.add('hidden');
     
     currentState.story.currentIndex = 0;
     currentState.story.phase = 'review';
@@ -815,6 +818,7 @@ function initSkeletonOnly() {
     // Stop speech when entering skeleton builder
     window.speechSynthesis.cancel();
     readAloudBtn.textContent = 'Read Aloud';
+    readStructureBtn.classList.add('hidden');
 
     // Show the story screen first
     showScreen('story');
@@ -834,6 +838,9 @@ function initSkeletonBuilder() {
     currentState.story.phase = 'builder';
     currentState.story.userSequence = [];
     
+    // Stop any ongoing speech
+    window.speechSynthesis.cancel();
+    
     storyContent.classList.add('hidden');
     ttsControlsEl.classList.add('hidden');
     skeletonBuilderEl.classList.remove('hidden');
@@ -841,6 +848,7 @@ function initSkeletonBuilder() {
     skeletonInstructionEl.classList.remove('hidden');
     startBuilderBtn.classList.add('hidden');
     checkStructureBtn.classList.remove('hidden');
+    readStructureBtn.classList.add('hidden'); // Hide until mastery
     resetBuilderBtn.classList.remove('hidden');
     restartStoryBtn.classList.remove('hidden');
     
@@ -859,6 +867,22 @@ function initSkeletonBuilder() {
         card.onclick = () => addToSequence(item, card);
         segmentsPoolEl.appendChild(card);
     });
+}
+
+function readStructure() {
+    if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        readStructureBtn.textContent = 'Read Structure';
+        return;
+    }
+
+    // Sort user sequence to ensure we read it in the order they built it (which should be correct if mastery is hit)
+    const textToRead = currentState.story.userSequence.map(item => item.text).join(". ");
+    
+    readStructureBtn.textContent = 'Stop Reading';
+    speakText(textToRead, () => {
+        readStructureBtn.textContent = 'Read Structure';
+    }, 0.8);
 }
 
 function addToSequence(item, cardEl) {
@@ -941,6 +965,7 @@ function checkStructure() {
         checkStructureBtn.classList.add('hidden');
         resetBuilderBtn.classList.add('hidden');
         restartStoryBtn.classList.add('hidden');
+        readStructureBtn.classList.remove('hidden'); // Show for mastery
         
         const backBtn = document.createElement('button');
         backBtn.className = 'btn-primary';
@@ -1072,10 +1097,9 @@ function playARSequence() {
             speakText(`The correct answer is: ${correctOption.text}. ${correctOption.rationale}`, () => {
                 if (!currentState.audioReview.isPlaying) return;
 
-                // 4. Pause 5 seconds before next
-                arStatusEl.textContent = "Next in 5s...";
-                
+                // 4. Pause 5 seconds before next (if auto-play)
                 if (arAutoPlayToggle.checked) {
+                    arStatusEl.textContent = "Next in 5s...";
                     currentState.audioReview.timeoutId = setTimeout(() => {
                         if (!currentState.audioReview.isPlaying) return;
                         
@@ -1245,6 +1269,8 @@ startSkeletonBtn.onclick = initSkeletonOnly;
 startAudioReviewBtn.onclick = initAudioReview;
 startOpenEndedBtn.onclick = initOpenEnded;
 backToMenuBtn.onclick = () => showScreen('landing');
+
+readStructureBtn.onclick = readStructure;
 
 hintBtn.onclick = () => {
     const question = currentState.quiz.questions[currentState.quiz.currentIndex];
