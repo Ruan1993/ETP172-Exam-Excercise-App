@@ -482,7 +482,9 @@ let currentState = {
         hintShown: false
     },
     story: {
-        currentIndex: 0
+        currentIndex: 0,
+        phase: 'review', // review, builder
+        userSequence: []
     },
     openEnded: {
         questions: [],
@@ -540,6 +542,14 @@ const storyContent = document.getElementById('story-content');
 const nextStoryBtn = document.getElementById('next-story-btn');
 const restartStoryBtn = document.getElementById('restart-story-btn');
 const storyProgressBar = document.getElementById('story-progress-bar');
+const startBuilderBtn = document.getElementById('start-builder-btn');
+const checkStructureBtn = document.getElementById('check-structure-btn');
+const skeletonBuilderEl = document.getElementById('skeleton-builder');
+const segmentsPoolEl = document.getElementById('segments-pool');
+const dropZoneEl = document.getElementById('drop-zone');
+const builderFeedbackEl = document.getElementById('builder-feedback');
+const storyInstructionEl = document.getElementById('story-instruction');
+const skeletonInstructionEl = document.getElementById('skeleton-instruction');
 
 /**
  * Utility: Fisher-Yates Shuffle
@@ -682,12 +692,23 @@ function showResults() {
  */
 function initStory() {
     currentState.story.currentIndex = 0;
+    currentState.story.phase = 'review';
+    currentState.story.userSequence = [];
+    
     storyContent.innerHTML = '';
+    storyContent.classList.remove('hidden');
+    skeletonBuilderEl.classList.add('hidden');
+    builderFeedbackEl.classList.add('hidden');
+    storyInstructionEl.classList.remove('hidden');
+    skeletonInstructionEl.classList.add('hidden');
+    
     renderStorySegment();
     showScreen('story');
     updateStoryProgress();
     
     nextStoryBtn.classList.remove('hidden');
+    startBuilderBtn.classList.add('hidden');
+    checkStructureBtn.classList.add('hidden');
     restartStoryBtn.classList.add('hidden');
 }
 
@@ -710,9 +731,97 @@ function nextStorySegment() {
         
         if (currentState.story.currentIndex === appData.story.length - 1) {
             nextStoryBtn.classList.add('hidden');
-            restartStoryBtn.classList.remove('hidden');
+            startBuilderBtn.classList.remove('hidden');
         }
     }
+}
+
+function initSkeletonBuilder() {
+    currentState.story.phase = 'builder';
+    currentState.story.userSequence = [];
+    
+    storyContent.classList.add('hidden');
+    skeletonBuilderEl.classList.remove('hidden');
+    storyInstructionEl.classList.add('hidden');
+    skeletonInstructionEl.classList.remove('hidden');
+    startBuilderBtn.classList.add('hidden');
+    checkStructureBtn.classList.remove('hidden');
+    restartStoryBtn.classList.remove('hidden');
+    
+    // Prepare pool
+    const pool = appData.story.map((text, index) => ({ text, originalIndex: index }));
+    shuffle(pool);
+    
+    segmentsPoolEl.innerHTML = '';
+    dropZoneEl.innerHTML = '';
+    builderFeedbackEl.classList.add('hidden');
+    
+    pool.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'builder-card';
+        card.textContent = item.text.substring(0, 100) + '...';
+        card.title = item.text;
+        card.onclick = () => addToSequence(item, card);
+        segmentsPoolEl.appendChild(card);
+    });
+}
+
+function addToSequence(item, cardEl) {
+    if (cardEl.classList.contains('selected')) return;
+    
+    cardEl.classList.add('selected');
+    currentState.story.userSequence.push(item);
+    
+    const placedCard = document.createElement('div');
+    placedCard.className = 'placed-card';
+    placedCard.textContent = item.text.substring(0, 100) + '...';
+    placedCard.setAttribute('data-index', currentState.story.userSequence.length);
+    dropZoneEl.appendChild(placedCard);
+    
+    // Auto-scroll to bottom of drop zone
+    dropZoneEl.scrollTop = dropZoneEl.scrollHeight;
+}
+
+function checkStructure() {
+    const total = appData.story.length;
+    const userCount = currentState.story.userSequence.length;
+    
+    if (userCount < total) {
+        showBuilderFeedback(`Please place all ${total} segments before checking.`, 'incorrect');
+        return;
+    }
+    
+    let isCorrect = true;
+    currentState.story.userSequence.forEach((item, index) => {
+        if (item.originalIndex !== index) {
+            isCorrect = false;
+        }
+    });
+    
+    if (isCorrect) {
+        showBuilderFeedback("Excellent! You have perfectly reconstructed the essay's logical flow.", 'correct');
+        checkStructureBtn.classList.add('hidden');
+        restartStoryBtn.classList.add('hidden');
+        // Change restart to "Return to Menu" or similar
+        const backBtn = document.createElement('button');
+        backBtn.className = 'btn-primary';
+        backBtn.textContent = 'Return to Menu';
+        backBtn.onclick = () => showScreen('landing');
+        builderFeedbackEl.appendChild(backBtn);
+    } else {
+        showBuilderFeedback("The structure isn't quite right. The logical flow of Critical Theory is missing. Try again!", 'incorrect');
+        const retryBtn = document.createElement('button');
+        retryBtn.className = 'btn-secondary mt-20';
+        retryBtn.textContent = 'Try Again';
+        retryBtn.onclick = initSkeletonBuilder;
+        builderFeedbackEl.appendChild(retryBtn);
+    }
+}
+
+function showBuilderFeedback(message, type) {
+    builderFeedbackEl.innerHTML = `<p>${message}</p>`;
+    builderFeedbackEl.className = `info-box ${type === 'correct' ? 'success' : 'incorrect'}`;
+    builderFeedbackEl.classList.remove('hidden');
 }
 
 function updateStoryProgress() {
@@ -816,6 +925,8 @@ oeQuestionSelector.onchange = (e) => {
 };
 
 nextStoryBtn.onclick = nextStorySegment;
+startBuilderBtn.onclick = initSkeletonBuilder;
+checkStructureBtn.onclick = checkStructure;
 restartStoryBtn.onclick = initStory;
 
 // Initialize

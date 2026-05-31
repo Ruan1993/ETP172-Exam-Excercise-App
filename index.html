@@ -58,6 +58,12 @@
       <!-- Open-Ended Practice Screen -->
       <section id="open-ended-screen" class="screen hidden">
         <div class="container">
+          <div class="instruction-box">
+            <p>
+              <strong>Open-Ended:</strong> Draft your notes in the area below.
+              Use your own words, then reveal the model answer for comparison.
+            </p>
+          </div>
           <div class="practice-header">
             <div class="topic-info">
               Topic: <span id="oe-topic-text">General Section A</span>
@@ -102,6 +108,12 @@
       <!-- Quiz Screen -->
       <section id="quiz-screen" class="screen hidden">
         <div class="container">
+          <div class="instruction-box">
+            <p>
+              <strong>Quiz Mode:</strong> Select the best answer. Use the hint
+              button if stuck, and read the rationale.
+            </p>
+          </div>
           <div class="quiz-header">
             <div class="progress-info">
               Question <span id="current-question-num">1</span> of 33
@@ -147,6 +159,18 @@
       <!-- Story Screen -->
       <section id="story-screen" class="screen hidden">
         <div class="container">
+          <div id="story-instruction" class="instruction-box">
+            <p>
+              <strong>Story Mode:</strong> Read through the essay segments to
+              understand the logical flow. Click Next to reveal the narrative.
+            </p>
+          </div>
+          <div id="skeleton-instruction" class="instruction-box hidden">
+            <p>
+              <strong>Skeleton Builder:</strong> Click segments to order them
+              from Introduction to Conclusion. Check your structure.
+            </p>
+          </div>
           <div class="story-header">
             <h2>Essay Story Mode: Critical Theory</h2>
             <div class="progress-bar-container">
@@ -156,8 +180,30 @@
           <div id="story-content" class="story-container">
             <!-- Story segments will appear here -->
           </div>
+
+          <!-- Skeleton Builder Phase -->
+          <div id="skeleton-builder" class="hidden">
+            <div class="builder-layout">
+              <div class="available-segments">
+                <h3>Available Segments</h3>
+                <div id="segments-pool" class="segments-grid"></div>
+              </div>
+              <div class="builder-area">
+                <h3>Your Structure</h3>
+                <div id="drop-zone" class="drop-zone"></div>
+              </div>
+            </div>
+            <div id="builder-feedback" class="info-box hidden"></div>
+          </div>
+
           <div class="story-actions">
             <button id="next-story-btn" class="btn-primary">Next</button>
+            <button id="start-builder-btn" class="btn-primary hidden">
+              Start Skeleton Builder
+            </button>
+            <button id="check-structure-btn" class="btn-primary hidden">
+              Check Structure
+            </button>
             <button id="restart-story-btn" class="btn-secondary hidden">
               Restart Story
             </button>
