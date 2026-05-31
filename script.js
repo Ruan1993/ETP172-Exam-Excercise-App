@@ -355,6 +355,104 @@ const appData = {
             ]
         }
     ],
+    openEnded: [
+        // --- White Paper (1995) & Transformation ---
+        { 
+            topic: "White Paper (1995) & Transformation",
+            question: "Discuss the primary aim of the White Paper on Education and Training (1995) and how it sought to transform the South African education system.",
+            answer: "The primary aim was to eliminate the divided and unequal apartheid structures and build a single, united national system for all South Africans. It sought transformation through democratization, ensuring that all stakeholders (parents, teachers, and learners) have a say in school governance via School Governing Bodies (SGBs). It also introduced the concept of Lifelong Learning, integrating education and training to provide opportunities for those previously excluded by Bantu Education."
+        },
+        { 
+            topic: "White Paper (1995) & Transformation",
+            question: "Explain the three core principles of redress, equity, and access as promoted by the 1995 White Paper.",
+            answer: "1. Redress: Specifically refers to correcting the historical imbalances and inequalities inherited from the apartheid era, often by providing more resources to those previously deprived.\n2. Equity: Ensuring fairness in the distribution of resources and opportunities, so that every learner has what they need to succeed.\n3. Access: Opening the doors of learning to all citizens, regardless of race, gender, or location, making education a fundamental right for everyone."
+        },
+        { 
+            topic: "White Paper (1995) & Transformation",
+            question: "Analyze the role of School Governing Bodies (SGBs) in promoting democratization within the South African school system.",
+            answer: "SGBs were established to decentralize power from the central government to the local school community. By involving parents, teachers, non-teaching staff, and learners (in secondary schools), SGBs ensure that school decisions reflect the needs and values of the community. This supports democratic values by fostering participation, transparency, and accountability in the management of school funds, policies, and environment."
+        },
+        // --- SAQA & NQF ---
+        { 
+            topic: "SAQA & NQF",
+            question: "Explain the relationship between SAQA and the NQF, and how they contribute to an integrated national education system.",
+            answer: "The South African Qualifications Authority (SAQA) is the statutory body that oversees the development and implementation of the National Qualifications Framework (NQF). The NQF is a comprehensive system that classifies, registers, and publishes all national qualifications. Together, they create an integrated system that ensures national standards are met across all levels of education (from primary school to doctorate) and across different sectors (academic and vocational)."
+        },
+        { 
+            topic: "SAQA & NQF",
+            question: "How do the NQF and SAQA support the concept of 'Lifelong Learning' in South Africa?",
+            answer: "They support Lifelong Learning by creating a flexible and integrated framework where learning achievements can be formally recognized and registered. This allows learners to move more easily between different institutions and sectors (e.g., from a vocational college to a university) by facilitating the transfer of credits. This mobility ensures that learning is not seen as a one-time event but as a continuous process throughout a person's life."
+        },
+        // --- NCS to CAPS ---
+        { 
+            topic: "NCS to CAPS",
+            question: "Compare the National Curriculum Statement (NCS) and the Curriculum and Assessment Policy Statement (CAPS), focusing on why the transition was necessary.",
+            answer: "The transition was necessary because the original NCS was criticized by teachers for being too vague, confusing, and administratively heavy. It lacked clear guidance on exactly what to teach and how to assess it. CAPS was introduced as an 'amendment' to the NCS to simplify and streamline the process. It provides highly prescriptive, week-by-week guidelines for every subject, making it much clearer for teachers what content needs to be covered and when."
+        },
+        { 
+            topic: "NCS to CAPS",
+            question: "Discuss the advantages and potential disadvantages of the highly prescriptive nature of the CAPS document.",
+            answer: "Advantages: It provides clear structure, ensures consistency across all schools in the country, and helps inexperienced teachers by giving them a detailed 'roadmap' for the year.\nDisadvantages: The strict pacing and content requirements can limit teacher autonomy and creativity. It may also prevent teachers from slowing down to help students who are struggling or from exploring interesting topics in more depth because they must 'stick to the schedule'."
+        },
+        { 
+            topic: "NCS to CAPS",
+            question: "Explain the standard structure of a CAPS document and how it ensures consistency across different subjects and grades.",
+            answer: "Every CAPS document is divided into four standard sections: 1. Background (the context and legal framework), 2. Aims (the general goals of the curriculum and specific subject goals), 3. Content (the week-by-week breakdown of topics and skills), and 4. Assessment (detailed guidelines for formal and informal assessment). This uniform structure ensures that regardless of the subject or grade, teachers and administrators have a consistent and predictable framework to follow."
+        },
+        // --- Types of Curricula ---
+        { 
+            topic: "Types of Curricula",
+            question: "Differentiate between the Official (Explicit) Curriculum and the Hidden Curriculum, providing examples of each in a school context.",
+            answer: "The Official (Explicit) Curriculum is the formal, written plan of what students are expected to learn, such as the CAPS documents and textbooks. Example: Learning the water cycle in Grade 4 Science.\nThe Hidden Curriculum consists of the unspoken or implicit lessons, values, and norms that students learn through the school environment and social interactions. Example: Learning to respect authority by observing how teachers interact with the principal, or learning about gender roles through the types of sports encouraged for boys vs. girls."
+        },
+        { 
+            topic: "Types of Curricula",
+            question: "Define the 'Null' curriculum and the 'Enacted' curriculum, and explain how they impact a student's learning experience.",
+            answer: "Null Curriculum: Refers to what is NOT taught in schools. By excluding certain topics (e.g., local indigenous history or specific environmental issues), schools send a message about what society considers unimportant. This shapes a student's worldview by limiting their exposure to certain perspectives.\nEnacted Curriculum: Refers to what actually happens in the classroom—how the teacher interprets and delivers the official curriculum. This impacts the student directly because the teacher's enthusiasm, knowledge, and adaptations determine how engaging and relevant the material becomes."
+        },
+        // --- Inquiry-Based Learning ---
+        { 
+            topic: "Inquiry-Based Learning",
+            question: "Describe the core principles of Inquiry-Based Learning and how it differs from traditional 'banking' models of education.",
+            answer: "Inquiry-Based Learning is student-centered and starts with a question, problem, or scenario rather than just presenting facts. It involves active investigation, research, and analysis by the students. This differs from the 'banking model' (criticized by Paulo Freire), where students are treated as passive 'containers' into which the teacher 'deposits' facts to be memorized and repeated. Inquiry focuses on 'how' to think, while the banking model focuses on 'what' to remember."
+        },
+        { 
+            topic: "Inquiry-Based Learning",
+            question: "Explain the role of the teacher as a 'facilitator' in an inquiry-based classroom and provide a practical example of an inquiry-based activity.",
+            answer: "As a facilitator, the teacher does not provide all the answers. Instead, they design challenging questions, provide resources, and guide students through the process of discovery. Example: Instead of lecturing about soil erosion, a teacher might ask, 'Why is the school garden losing its topsoil?' Students would then investigate the garden, research erosion, test the soil, and propose their own solutions to the problem."
+        },
+        { 
+            topic: "Inquiry-Based Learning",
+            question: "Discuss how Inquiry-Based Learning aligns with the theory of Constructivism.",
+            answer: "IBL is deeply rooted in Constructivism, which argues that learners actively build or 'construct' their own knowledge based on their experiences and prior knowledge. In an inquiry-based setting, students are not just receiving information; they are actively processing it, making connections, and solving problems, which is exactly how constructivists believe meaningful learning occurs. Figures like John Dewey emphasized that 'learning by doing' is essential for true understanding."
+        },
+        // --- Neuroplasticity & Vygotsky ---
+        { 
+            topic: "Neuroplasticity & Vygotsky",
+            question: "Define the Zone of Proximal Development (ZPD) and explain its significance in Vygotsky's theory of social constructivism.",
+            answer: "The ZPD is the 'sweet spot' of learning—the gap between what a learner can do independently and what they can achieve with the guidance of a More Knowledgeable Other (MKO). Its significance lies in the idea that teaching should always target this zone. If a task is too easy (below ZPD), no new learning occurs; if it's too hard (above ZPD), the student becomes frustrated. Effective instruction 'pushes' the student through the ZPD."
+        },
+        { 
+            topic: "Neuroplasticity & Vygotsky",
+            question: "What is 'scaffolding' in the context of Vygotsky’s theory, and how should a teacher use it to support a learner's development?",
+            answer: "Scaffolding is the temporary support provided by the teacher (MKO) to help the student complete a task within their ZPD. This can include hints, guiding questions, breaking a task into smaller steps, or modeling a process. As the student gains competence and confidence, the teacher gradually removes the 'scaffold' until the student can perform the task independently. It is a dynamic process that adjusts to the learner's needs."
+        },
+        { 
+            topic: "Neuroplasticity & Vygotsky",
+            question: "Discuss the role of the 'More Knowledgeable Other' (MKO) and why social interaction is considered essential for cognitive development.",
+            answer: "The MKO is anyone who has a better understanding or higher skill level than the learner for a specific task (it could be a teacher, a peer, or even a computer program). Vygotsky argued that cognitive development is inherently social. We first learn through interaction with others (inter-psychological) and then internalize that knowledge (intra-psychological). Without social interaction and the guidance of an MKO, many complex cognitive skills would be impossible to develop."
+        },
+        { 
+            topic: "Neuroplasticity & Vygotsky",
+            question: "Explain the concept of Neuroplasticity and how learning physically changes the structure of the brain.",
+            answer: "Neuroplasticity is the brain's ability to reorganize itself by forming new neural connections throughout life. When we learn something new or practice a skill, electrical impulses travel between neurons. Repeated mental effort and social interaction cause these neurons to form new pathways or strengthen existing ones. This means the brain is not a 'fixed' organ; it is physically altered by our experiences and learning activities."
+        },
+        { 
+            topic: "Neuroplasticity & Vygotsky",
+            question: "Analyze the link between Vygotsky’s social constructivism and the biological process of neuroplasticity.",
+            answer: "Vygotsky's theory and neuroplasticity are two sides of the same coin. Social constructivism describes the 'method' (learning through social interaction and guidance in the ZPD), while neuroplasticity describes the 'biological result'. When a student interacts with an MKO and exerts mental effort to cross their ZPD, that social and cognitive activity triggers the brain to physically create and strengthen the neural pathways required to master the new skill. Social interaction is the fuel for biological brain growth."
+        }
+    ],
     story: [
         "Critical Theory is an important approach in education that helps us understand how power, inequality and injustice operate in schools. It emerged not just to describe society, but to change it.",
         "The theory developed in the 1930s in Germany by a group of thinkers called the Frankfurt School. Key figures include Max Horkheimer, Theodor Adorno, Jurgen Habermas, and later, the Brazilian educator Paulo Freire.",
@@ -375,7 +473,7 @@ const appData = {
  * App State
  */
 let currentState = {
-    view: 'landing', // landing, quiz, story, results
+    view: 'landing', // landing, quiz, story, open-ended, results
     quiz: {
         questions: [],
         currentIndex: 0,
@@ -385,6 +483,11 @@ let currentState = {
     },
     story: {
         currentIndex: 0
+    },
+    openEnded: {
+        questions: [],
+        currentIndex: 0,
+        revealed: false
     }
 };
 
@@ -395,6 +498,7 @@ const screens = {
     landing: document.getElementById('landing-screen'),
     quiz: document.getElementById('quiz-screen'),
     story: document.getElementById('story-screen'),
+    openEnded: document.getElementById('open-ended-screen'),
     results: document.getElementById('results-screen')
 };
 const navbar = document.getElementById('navbar');
@@ -403,6 +507,7 @@ const backToMenuBtn = document.getElementById('back-to-menu');
 // Landing
 const startQuizBtn = document.getElementById('start-quiz');
 const startStoryBtn = document.getElementById('start-story');
+const startOpenEndedBtn = document.getElementById('start-open-ended');
 
 // Quiz
 const questionNumEl = document.getElementById('current-question-num');
@@ -417,6 +522,18 @@ const feedbackBox = document.getElementById('feedback-box');
 const feedbackTitle = document.getElementById('feedback-title');
 const rationaleTextEl = document.getElementById('rationale-text');
 const retakeQuizBtn = document.getElementById('retake-quiz');
+
+// Open-Ended
+const oeTopicEl = document.getElementById('oe-topic-text');
+const oeCurrentNumEl = document.getElementById('oe-current-num');
+const oeTotalNumEl = document.getElementById('oe-total-num');
+const oeQuestionSelector = document.getElementById('oe-question-selector');
+const oeQuestionEl = document.getElementById('oe-question-text');
+const oeUserNotesEl = document.getElementById('oe-user-notes');
+const oeRevealBtn = document.getElementById('oe-reveal-btn');
+const oeAnswerBox = document.getElementById('oe-answer-box');
+const oeAnswerTextEl = document.getElementById('oe-answer-text');
+const oeNavInfo = document.querySelector('.navigation-info');
 
 // Story
 const storyContent = document.getElementById('story-content');
@@ -604,10 +721,82 @@ function updateStoryProgress() {
 }
 
 /**
+ * Open-Ended Practice Logic
+ */
+function initOpenEnded() {
+    currentState.openEnded.questions = shuffle([...appData.openEnded]);
+    currentState.openEnded.currentIndex = 0;
+    currentState.openEnded.revealed = false;
+    
+    oeTotalNumEl.textContent = currentState.openEnded.questions.length;
+    oeNavInfo.classList.remove('hidden');
+    
+    // Populate selector
+    oeQuestionSelector.innerHTML = '';
+    currentState.openEnded.questions.forEach((q, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `Question ${index + 1}`;
+        oeQuestionSelector.appendChild(option);
+    });
+    
+    renderOEQuestion();
+    showScreen('openEnded');
+}
+
+function renderOEQuestion() {
+    const question = currentState.openEnded.questions[currentState.openEnded.currentIndex];
+    
+    oeTopicEl.textContent = question.topic;
+    oeCurrentNumEl.textContent = currentState.openEnded.currentIndex + 1;
+    oeQuestionEl.textContent = question.question;
+    oeUserNotesEl.value = '';
+    
+    // Update selector value
+    oeQuestionSelector.value = currentState.openEnded.currentIndex;
+    
+    oeAnswerBox.classList.add('hidden');
+    oeRevealBtn.textContent = 'Reveal Answer';
+    currentState.openEnded.revealed = false;
+}
+
+function handleOEReveal() {
+    if (!currentState.openEnded.revealed) {
+        // Reveal Answer
+        const question = currentState.openEnded.questions[currentState.openEnded.currentIndex];
+        oeAnswerTextEl.textContent = question.answer;
+        oeAnswerBox.classList.remove('hidden');
+        oeRevealBtn.textContent = 'Next Question';
+        currentState.openEnded.revealed = true;
+    } else {
+        // Next Question
+        currentState.openEnded.currentIndex++;
+        if (currentState.openEnded.currentIndex < currentState.openEnded.questions.length) {
+            renderOEQuestion();
+        } else {
+            // Completion
+            oeQuestionEl.textContent = "Practice Session Completed!";
+            oeTopicEl.textContent = "Finished";
+            oeNavInfo.classList.add('hidden');
+            oeUserNotesEl.classList.add('hidden');
+            oeAnswerBox.classList.add('hidden');
+            oeRevealBtn.textContent = 'Restart Practice';
+            oeRevealBtn.onclick = () => {
+                oeUserNotesEl.classList.remove('hidden');
+                oeNavInfo.classList.remove('hidden');
+                oeRevealBtn.onclick = handleOEReveal; // Restore original handler
+                initOpenEnded();
+            };
+        }
+    }
+}
+
+/**
  * Event Listeners
  */
 startQuizBtn.onclick = initQuiz;
 startStoryBtn.onclick = initStory;
+startOpenEndedBtn.onclick = initOpenEnded;
 backToMenuBtn.onclick = () => showScreen('landing');
 
 hintBtn.onclick = () => {
@@ -618,6 +807,13 @@ hintBtn.onclick = () => {
 
 nextQuestionBtn.onclick = nextQuestion;
 retakeQuizBtn.onclick = initQuiz;
+
+oeRevealBtn.onclick = handleOEReveal;
+
+oeQuestionSelector.onchange = (e) => {
+    currentState.openEnded.currentIndex = parseInt(e.target.value);
+    renderOEQuestion();
+};
 
 nextStoryBtn.onclick = nextStorySegment;
 restartStoryBtn.onclick = initStory;

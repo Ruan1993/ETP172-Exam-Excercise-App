@@ -1,101 +1,177 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ETP172 Exam Prep App</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div id="app">
-        <!-- Navigation Bar -->
-        <nav id="navbar" class="hidden">
-            <div class="nav-container">
-                <span class="nav-title">ETP172 Exam Prep</span>
-                <button id="back-to-menu" class="btn-small">Main Menu</button>
-            </div>
-        </nav>
+      <!-- Navigation Bar -->
+      <nav id="navbar" class="hidden">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <span class="logo-text">ETP172 Exam Exercise</span>
+          </div>
+          <button id="back-to-menu" class="btn-small">Main Menu</button>
+        </div>
+      </nav>
 
-        <!-- Landing Screen -->
-        <section id="landing-screen" class="screen">
-            <div class="card">
-                <h1>ETP172 Exam Preparation</h1>
-                <p>Welcome to your interactive study assistant. Choose a mode to begin your preparation for the university-level exam.</p>
-                <div class="menu-options">
-                    <button id="start-quiz" class="btn-large">
-                        <span class="btn-title">Interactive Quiz</span>
-                        <span class="btn-desc">Test your knowledge with 33 comprehensive questions from Section A.</span>
-                    </button>
-                    <button id="start-story" class="btn-large">
-                        <span class="btn-title">Essay Story Mode</span>
-                        <span class="btn-desc">Master the Critical Theory essay through a sequential narrative flow.</span>
-                    </button>
-                </div>
-            </div>
-        </section>
+      <!-- Landing Screen -->
+      <section id="landing-screen" class="screen">
+        <div class="card">
+          <div class="landing-header">
+            <div class="main-logo">ETP172 Exam Exercise</div>
+            <h1>Exam Preparation</h1>
+          </div>
+          <p>
+            Welcome to your interactive study assistant. Choose a mode to begin
+            your preparation for the university-level exam.
+          </p>
+          <div class="menu-options">
+            <button id="start-quiz" class="btn-large">
+              <span class="btn-title">Interactive Quiz</span>
+              <span class="btn-desc"
+                >Test your knowledge with 33 comprehensive questions from
+                Section A.</span
+              >
+            </button>
+            <button id="start-story" class="btn-large">
+              <span class="btn-title">Essay Story Mode</span>
+              <span class="btn-desc"
+                >Master the Critical Theory essay through a sequential narrative
+                flow.</span
+              >
+            </button>
+            <button id="start-open-ended" class="btn-large">
+              <span class="btn-title">Open-Ended Practice</span>
+              <span class="btn-desc"
+                >Simulate Section A exam questions with active recall and
+                self-assessment.</span
+              >
+            </button>
+          </div>
+        </div>
+      </section>
 
-        <!-- Quiz Screen -->
-        <section id="quiz-screen" class="screen hidden">
-            <div class="container">
-                <div class="quiz-header">
-                    <div class="progress-info">
-                        Question <span id="current-question-num">1</span> of 33
-                    </div>
-                    <div class="score-info">
-                        Score: <span id="current-score">0</span>
-                    </div>
-                </div>
-                <div id="question-container" class="card">
-                    <h2 id="question-text">Question text goes here?</h2>
-                    <div id="answer-options" class="options-grid">
-                        <!-- Options will be generated here -->
-                    </div>
-                    <div class="quiz-actions">
-                        <button id="hint-btn" class="btn-secondary">Show Hint</button>
-                        <button id="next-question-btn" class="btn-primary hidden">Next Question</button>
-                    </div>
-                    <div id="hint-box" class="info-box hidden">
-                        <strong>Hint:</strong> <span id="hint-text"></span>
-                    </div>
-                    <div id="feedback-box" class="info-box hidden">
-                        <h3 id="feedback-title">Correct!</h3>
-                        <p id="rationale-text"></p>
-                    </div>
-                </div>
+      <!-- Open-Ended Practice Screen -->
+      <section id="open-ended-screen" class="screen hidden">
+        <div class="container">
+          <div class="practice-header">
+            <div class="topic-info">
+              Topic: <span id="oe-topic-text">General Section A</span>
             </div>
-        </section>
+            <div class="navigation-info">
+              <select id="oe-question-selector" class="oe-select">
+                <!-- Options will be populated via JS -->
+              </select>
+              <div class="progress-info">
+                Question <span id="oe-current-num">1</span> of
+                <span id="oe-total-num">20</span>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <h2 id="oe-question-text" class="mb-20">
+              Question text goes here?
+            </h2>
 
-        <!-- Results Screen -->
-        <section id="results-screen" class="screen hidden">
-            <div class="card text-center">
-                <h2>Quiz Completed!</h2>
-                <div class="result-circle">
-                    <span id="final-percentage">0%</span>
-                </div>
-                <p>You scored <span id="final-score">0</span> out of 33.</p>
-                <button id="retake-quiz" class="btn-primary">Retake Test</button>
+            <div class="practice-input-area">
+              <label for="oe-user-notes">Your Notes / Draft Answer:</label>
+              <textarea
+                id="oe-user-notes"
+                placeholder="Type your key points or draft your answer here for active recall..."
+              ></textarea>
             </div>
-        </section>
 
-        <!-- Story Screen -->
-        <section id="story-screen" class="screen hidden">
-            <div class="container">
-                <div class="story-header">
-                    <h2>Essay Story Mode: Critical Theory</h2>
-                    <div class="progress-bar-container">
-                        <div id="story-progress-bar" class="progress-bar"></div>
-                    </div>
-                </div>
-                <div id="story-content" class="story-container">
-                    <!-- Story segments will appear here -->
-                </div>
-                <div class="story-actions">
-                    <button id="next-story-btn" class="btn-primary">Next</button>
-                    <button id="restart-story-btn" class="btn-secondary hidden">Restart Story</button>
-                </div>
+            <div class="practice-actions">
+              <button id="oe-reveal-btn" class="btn-primary">
+                Reveal Answer
+              </button>
             </div>
-        </section>
+
+            <div id="oe-answer-box" class="info-box hidden mt-20">
+              <h3>Model Answer / Explanation:</h3>
+              <p id="oe-answer-text"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quiz Screen -->
+      <section id="quiz-screen" class="screen hidden">
+        <div class="container">
+          <div class="quiz-header">
+            <div class="progress-info">
+              Question <span id="current-question-num">1</span> of 33
+            </div>
+            <div class="score-info">
+              Score: <span id="current-score">0</span>
+            </div>
+          </div>
+          <div id="question-container" class="card">
+            <h2 id="question-text">Question text goes here?</h2>
+            <div id="answer-options" class="options-grid">
+              <!-- Options will be generated here -->
+            </div>
+            <div class="quiz-actions">
+              <button id="hint-btn" class="btn-secondary">Show Hint</button>
+              <button id="next-question-btn" class="btn-primary hidden">
+                Next Question
+              </button>
+            </div>
+            <div id="hint-box" class="info-box hidden">
+              <strong>Hint:</strong> <span id="hint-text"></span>
+            </div>
+            <div id="feedback-box" class="info-box hidden">
+              <h3 id="feedback-title">Correct!</h3>
+              <p id="rationale-text"></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Screen -->
+      <section id="results-screen" class="screen hidden">
+        <div class="card text-center">
+          <h2>Quiz Completed!</h2>
+          <div class="result-circle">
+            <span id="final-percentage">0%</span>
+          </div>
+          <p>You scored <span id="final-score">0</span> out of 33.</p>
+          <button id="retake-quiz" class="btn-primary">Retake Test</button>
+        </div>
+      </section>
+
+      <!-- Story Screen -->
+      <section id="story-screen" class="screen hidden">
+        <div class="container">
+          <div class="story-header">
+            <h2>Essay Story Mode: Critical Theory</h2>
+            <div class="progress-bar-container">
+              <div id="story-progress-bar" class="progress-bar"></div>
+            </div>
+          </div>
+          <div id="story-content" class="story-container">
+            <!-- Story segments will appear here -->
+          </div>
+          <div class="story-actions">
+            <button id="next-story-btn" class="btn-primary">Next</button>
+            <button id="restart-story-btn" class="btn-secondary hidden">
+              Restart Story
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
+
+    <footer id="main-footer">
+      <div class="footer-container">
+        <p>&copy; 2026 Created by Ruan Coetzee</p>
+      </div>
+    </footer>
+
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
