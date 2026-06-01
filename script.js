@@ -544,6 +544,7 @@ let currentState = {
         questions: [],
         currentIndex: 0,
         isPlaying: false,
+        isPaused: false,
         timeoutId: null
     }
 };
@@ -606,6 +607,8 @@ const arSpeechRateInput = document.getElementById('ar-speech-rate');
 const arRateValueEl = document.getElementById('ar-rate-value');
 const arAutoPlayToggle = document.getElementById('ar-auto-play-toggle');
 const arControlBtn = document.getElementById('ar-control-btn');
+const arPauseBtn = document.getElementById('ar-pause-btn');
+const arPrevBtn = document.getElementById('ar-prev-btn');
 const arNextBtn = document.getElementById('ar-next-btn');
 
 // Gamification
@@ -1067,6 +1070,7 @@ function initAudioReview() {
     currentState.audioReview.questions = shuffle([...appData.quiz]);
     currentState.audioReview.currentIndex = 0;
     currentState.audioReview.isPlaying = false;
+    currentState.audioReview.isPaused = false;
     if (currentState.audioReview.timeoutId) clearTimeout(currentState.audioReview.timeoutId);
     
     arTotalNumEl.textContent = currentState.audioReview.questions.length;
@@ -1081,11 +1085,21 @@ function renderARQuestion() {
     arAnswerBox.classList.add('hidden');
     arStatusEl.textContent = "Ready to start";
     arControlBtn.textContent = "Start Audio Review";
-    arNextBtn.classList.add('hidden');
+    arPauseBtn.classList.add('hidden');
+    
+    // Show/Hide navigation buttons
+    arPrevBtn.classList.toggle('hidden', currentState.audioReview.currentIndex === 0);
+    arNextBtn.classList.toggle('hidden', currentState.audioReview.currentIndex === currentState.audioReview.questions.length - 1);
+    
+    // If not first question, show nav
+    if (currentState.audioReview.currentIndex > 0 || currentState.audioReview.currentIndex < currentState.audioReview.questions.length - 1) {
+        arPrevBtn.classList.remove('hidden');
+        arNextBtn.classList.remove('hidden');
+    }
 }
 
 function toggleAudioReview() {
-    if (currentState.audioReview.isPlaying) {
+    if (currentState.audioReview.isPlaying || currentState.audioReview.isPaused) {
         stopAudioReview();
     } else {
         startAudioReview();
@@ -1094,17 +1108,35 @@ function toggleAudioReview() {
 
 function startAudioReview() {
     currentState.audioReview.isPlaying = true;
+    currentState.audioReview.isPaused = false;
     arControlBtn.textContent = "Stop Audio Review";
-    arNextBtn.classList.add('hidden');
+    arPauseBtn.classList.remove('hidden');
+    arPauseBtn.textContent = "Pause";
     playARSequence();
 }
 
 function stopAudioReview() {
     currentState.audioReview.isPlaying = false;
+    currentState.audioReview.isPaused = false;
     window.speechSynthesis.cancel();
     if (currentState.audioReview.timeoutId) clearTimeout(currentState.audioReview.timeoutId);
     arControlBtn.textContent = "Start Audio Review";
-    arStatusEl.textContent = "Paused";
+    arPauseBtn.classList.add('hidden');
+    arStatusEl.textContent = "Stopped";
+}
+
+function togglePauseResume() {
+    if (window.speechSynthesis.speaking && !currentState.audioReview.isPaused) {
+        window.speechSynthesis.pause();
+        currentState.audioReview.isPaused = true;
+        arPauseBtn.textContent = "Resume";
+        arStatusEl.textContent = "Paused";
+    } else if (currentState.audioReview.isPaused) {
+        window.speechSynthesis.resume();
+        currentState.audioReview.isPaused = false;
+        arPauseBtn.textContent = "Pause";
+        arStatusEl.textContent = "Resumed";
+    }
 }
 
 function playARSequence() {
@@ -1148,20 +1180,28 @@ function playARSequence() {
                     }, 5000);
                 } else {
                     arStatusEl.textContent = "Ready for next question";
-                    arNextBtn.classList.remove('hidden');
                     currentState.audioReview.isPlaying = false;
                     arControlBtn.textContent = "Start Next Question";
+                    arPauseBtn.classList.add('hidden');
                 }
             });
         }, 3000);
     }, arSpeechRateInput.value);
 }
 
+function prevARQuestion() {
+    if (currentState.audioReview.currentIndex > 0) {
+        stopAudioReview();
+        currentState.audioReview.currentIndex--;
+        renderARQuestion();
+    }
+}
+
 function nextARQuestion() {
     if (currentState.audioReview.currentIndex < currentState.audioReview.questions.length - 1) {
+        stopAudioReview();
         currentState.audioReview.currentIndex++;
         renderARQuestion();
-        startAudioReview();
     }
 }
 
@@ -1328,6 +1368,8 @@ arSpeechRateInput.oninput = (e) => {
 };
 
 arControlBtn.onclick = toggleAudioReview;
+arPauseBtn.onclick = togglePauseResume;
+arPrevBtn.onclick = prevARQuestion;
 arNextBtn.onclick = nextARQuestion;
 
 oeQuestionSelector.onchange = (e) => {

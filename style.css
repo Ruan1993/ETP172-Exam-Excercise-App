@@ -790,6 +790,17 @@ input:checked + .toggle-slider:before {
     color: var(--text-color);
 }
 
+.ar-nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.ar-nav-buttons .btn-small {
+    min-width: 120px;
+}
+
 /* Results */
 .result-circle {
     width: 150px;
