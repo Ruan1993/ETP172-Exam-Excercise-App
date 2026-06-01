@@ -8,102 +8,134 @@ const appData = {
             question: "What was the main aim of the White Paper on Education and Training (1995)?",
             hint: "Think about the transition from the apartheid system.",
             options: [
-                { text: "To eliminate divided apartheid structures and build a united national system.", isCorrect: true, rationale: "The document states its main aim was to eliminate divided/unequal apartheid structures and build one united national system." },
-                { text: "To introduce the CAPS curriculum immediately.", isCorrect: false, rationale: "CAPS was introduced much later as an amendment to the NCS." },
-                { text: "To make university education free for all citizens.", isCorrect: false, rationale: "The 1995 White Paper focused on transforming the basic education system structures." },
-                { text: "To reduce the number of teachers in rural areas.", isCorrect: false, rationale: "The policy aimed at equity and access, not reducing staff." }
+                { text: "To eliminate divided apartheid structures and build a single, united national system for all South Africans.", isCorrect: true, rationale: "The 1995 White Paper's primary goal was to replace the fragmented, unequal apartheid education departments with a unified national system based on democratic values." },
+                { text: "To introduce the CAPS curriculum immediately.", isCorrect: false, rationale: "CAPS was introduced much later (2011) as a technical amendment to simplify the NCS." },
+                { text: "To make university education free for all citizens.", isCorrect: false, rationale: "The 1995 White Paper focused on transforming the basic education system structures and rights." },
+                { text: "To reduce the number of teachers in rural areas.", isCorrect: false, rationale: "The policy aimed at equity and access, which often required increasing resources in neglected areas." }
             ]
         },
         {
-            question: "Which 1996 Act made education compulsory for children aged 7 to 15?",
-            hint: "It shares its name with the general category of schools in SA.",
+            question: "Which core principle of the 1995 White Paper focuses on 'correcting historical imbalances'?",
+            hint: "It starts with 'R'.",
             options: [
-                { text: "South African Schools Act", isCorrect: true, rationale: "The South African Schools Act (1996) followed the White Paper and made education compulsory for ages 7-15." },
-                { text: "National Education Policy Act", isCorrect: false, rationale: "This act provides the framework but SASA specifically handles school attendance." },
-                { text: "The Constitution of South Africa", isCorrect: false, rationale: "The Constitution guarantees the right to education, but SASA specifies the ages." },
-                { text: "The Higher Education Act", isCorrect: false, rationale: "This act governs universities, not compulsory schooling." }
+                { text: "Redress", isCorrect: true, rationale: "Redress specifically refers to the systemic correction of historical inequalities by providing more resources to those previously deprived." },
+                { text: "Equity", isCorrect: false, rationale: "Equity is about fairness in current distribution, while redress is about fixing past wrongs." },
+                { text: "Access", isCorrect: false, rationale: "Access is about opening doors to all citizens, a fundamental right established in the White Paper." },
+                { text: "Accountability", isCorrect: false, rationale: "While important, it is not one of the three 'pillars' (Redress, Equity, Access)." }
             ]
         },
         {
-            question: "What are the three main principles promoted by the 1995 White Paper?",
-            hint: "Fixing, fairness, and opening doors.",
+            question: "According to the White Paper (1995), how is democratization achieved in schools?",
+            hint: "Think about who participates in governance.",
             options: [
-                { text: "Redress, equity, and access", isCorrect: true, rationale: "The document explicitly mentions redress (fixing inequalities), equity (fairness), and access (chance to learn)." },
-                { text: "Testing, marking, and reporting", isCorrect: false, rationale: "These are administrative functions, not core transformation principles." },
-                { text: "Maths, Science, and Literacy", isCorrect: false, rationale: "These are subject areas, not systemic principles." },
-                { text: "Authority, discipline, and order", isCorrect: false, rationale: "The White Paper focused on democratic transformation." }
+                { text: "Through the establishment of School Governing Bodies (SGBs) involving all stakeholders.", isCorrect: true, rationale: "The White Paper promoted democratization by giving parents, teachers, and learners a formal say in school governance via SGBs." },
+                { text: "By allowing the principal to make all financial decisions.", isCorrect: false, rationale: "SGBs are meant to decentralize power away from a single authority figure." },
+                { text: "By following orders directly from the central government.", isCorrect: false, rationale: "Democratization involves local participation and community-based decision-making." },
+                { text: "By removing all school fees immediately.", isCorrect: false, rationale: "While 'Access' is a goal, democratization specifically refers to the participation and governance structures like SGBs." }
             ]
         },
         {
-            question: "In the context of the White Paper, what does 'redress' mean?",
-            hint: "Think about correcting a historical wrong.",
+            question: "The 1995 White Paper integrated education and training to support which concept?",
+            hint: "It implies that learning never stops.",
             options: [
-                { text: "Fixing past inequalities caused by the apartheid system.", isCorrect: true, rationale: "Redress refers specifically to correcting the imbalances and inequalities inherited from the past." },
-                { text: "Giving everyone the exact same amount of money regardless of need.", isCorrect: false, rationale: "Redress often requires giving MORE to those who were previously deprived." },
-                { text: "Dressing students in school uniforms to promote equality.", isCorrect: false, rationale: "This is a literal interpretation; in policy, it refers to systemic correction." },
-                { text: "Changing the names of all schools in South Africa.", isCorrect: false, rationale: "Redress is about resources, quality, and opportunity." }
-            ]
-        },
-        {
-            question: "What is the purpose of School Governing Bodies (SGBs) according to the transformation goals?",
-            hint: "Who gets to participate in school decisions?",
-            options: [
-                { text: "To promote democratisation by involving parents, teachers, and learners in decisions.", isCorrect: true, rationale: "SGBs allow stakeholders to participate in school governance, supporting democratic values." },
-                { text: "To allow the principal to make all decisions without interference.", isCorrect: false, rationale: "SGBs are meant to decentralize power, not concentrate it in the principal." },
-                { text: "To collect school fees and keep the money for the government.", isCorrect: false, rationale: "SGBs manage school funds, but their primary purpose is democratic governance." },
-                { text: "To write the official CAPS curriculum for the school.", isCorrect: false, rationale: "The curriculum is dictated by the Department of Basic Education." }
-            ]
-        },
-        {
-            question: "How did the 1995 White Paper view 'Lifelong Learning'?",
-            hint: "It combined two major areas to help those left out by Bantu Education.",
-            options: [
-                { text: "As a combination of education and training to help those previously excluded.", isCorrect: true, rationale: "It aimed to integrate education and training to provide opportunities for those left out by the old system." },
-                { text: "As a requirement that students must stay in school until they are 80.", isCorrect: false, rationale: "Lifelong learning refers to the opportunity to learn throughout life, not compulsory attendance duration." },
-                { text: "As a way to ensure teachers never retire.", isCorrect: false, rationale: "This is not what the policy meant by lifelong learning." },
-                { text: "As a focus only on adult literacy programs.", isCorrect: false, rationale: "It was a broader concept integrating the entire education and training framework." }
+                { text: "Lifelong Learning", isCorrect: true, rationale: "The White Paper integrated education and training to provide a flexible framework for continuous learning throughout a person's life." },
+                { text: "Bantu Education", isCorrect: false, rationale: "The White Paper was designed to eliminate the legacy of Bantu Education." },
+                { text: "The Banking Model", isCorrect: false, rationale: "The Banking Model is a critique by Freire, not a goal of the White Paper." },
+                { text: "Strict Pacing", isCorrect: false, rationale: "Strict pacing is a feature of CAPS, not a core concept of the 1995 White Paper." }
             ]
         },
 
         // --- Q2: SAQA and NQF ---
         {
-            question: "What does the acronym SAQA stand for?",
-            hint: "It's the 'Authority' that oversees qualifications.",
+            question: "What is the primary statutory body responsible for overseeing the NQF?",
+            hint: "The 'Authority' for qualifications.",
             options: [
-                { text: "South African Qualifications Authority", isCorrect: true, rationale: "SAQA is the body that oversees the National Qualifications Framework." },
-                { text: "South African Quality Assessment", isCorrect: false, rationale: "While they do quality work, the 'A' stands for Authority and 'Q' for Qualifications." },
-                { text: "School Achievement and Quality Agency", isCorrect: false, rationale: "Incorrect name; it focuses on national qualifications across all sectors." },
-                { text: "System for Advanced Quality Assurance", isCorrect: false, rationale: "Incorrect name." }
+                { text: "SAQA (South African Qualifications Authority)", isCorrect: true, rationale: "SAQA is the legal body that develops and implements the National Qualifications Framework (NQF)." },
+                { text: "The Department of Basic Education", isCorrect: false, rationale: "The DBE manages schools, but SAQA manages the qualifications framework across all sectors." },
+                { text: "Umalusi", isCorrect: false, rationale: "Umalusi is a Quality Council that reports to the NQF, but SAQA oversees the entire framework." },
+                { text: "SASA", isCorrect: false, rationale: "SASA is the Schools Act, not an authority for qualifications." }
             ]
         },
         {
-            question: "What is the primary function of the National Qualifications Framework (NQF)?",
-            hint: "It 'classifies, registers, and publishes'.",
+            question: "What is the main purpose of the National Qualifications Framework (NQF)?",
+            hint: "Classify, Register, Publish.",
             options: [
-                { text: "To classify, register, and publish national qualifications in an integrated system.", isCorrect: true, rationale: "The NQF is a comprehensive system for registering and classifying all learning achievements." },
-                { text: "To provide funding for university students.", isCorrect: false, rationale: "NSFAS handles funding; NQF handles the framework of qualifications." },
-                { text: "To write the textbooks used in primary schools.", isCorrect: false, rationale: "NQF is about the standards of the qualifications, not the specific content of textbooks." },
-                { text: "To hire and fire teachers in public schools.", isCorrect: false, rationale: "The Department of Basic Education or SGBs handle staffing." }
+                { text: "To classify, register, and publish all national qualifications in an integrated system.", isCorrect: true, rationale: "The NQF ensures national standards are met by creating a unified system for all levels of learning." },
+                { text: "To provide free textbooks to all learners.", isCorrect: false, rationale: "NQF deals with the standards and levels of qualifications, not the provision of physical materials." },
+                { text: "To decide which teachers are allowed to work.", isCorrect: false, rationale: "SACE handles teacher registration; NQF handles the qualifications themselves." },
+                { text: "To replace the university system with vocational colleges.", isCorrect: false, rationale: "The NQF integrates both academic and vocational paths into one flexible system." }
             ]
         },
         {
-            question: "How do SAQA and the NQF promote 'Lifelong Learning'?",
-            hint: "Think about moving between different institutions.",
+            question: "How does the NQF support 'mobility' in the education system?",
+            hint: "Think about moving between different sectors.",
             options: [
-                { text: "By making it easier for learners to transfer credits between institutions.", isCorrect: true, rationale: "The integrated framework allows for mobility and credit transfer, supporting continuous learning." },
-                { text: "By requiring all citizens to have a Master's degree.", isCorrect: false, rationale: "They set the framework, they don't mandate specific degrees for all." },
-                { text: "By offering free courses on the internet.", isCorrect: false, rationale: "They manage the framework of qualifications, they aren't primarily a course provider." },
-                { text: "By ensuring that once you start a degree, you can never change your mind.", isCorrect: false, rationale: "The system is designed for flexibility, not rigid paths." }
+                { text: "By allowing learners to transfer credits between different institutions and sectors.", isCorrect: true, rationale: "The integrated nature of the NQF makes it easier for learners to move between academic and vocational paths." },
+                { text: "By providing buses for students in rural areas.", isCorrect: false, rationale: "This is physical mobility; the NQF supports 'educational mobility'." },
+                { text: "By requiring all qualifications to be completed in one year.", isCorrect: false, rationale: "The NQF supports lifelong learning, which can take many years." },
+                { text: "By ensuring all exams are the same across the country.", isCorrect: false, rationale: "While it sets standards, its role in mobility is specifically about the transferability of achievements." }
+            ]
+        },
+
+        // --- Q3: Critical Theory ---
+        {
+            question: "Where did Critical Theory originate?",
+            hint: "1930s Germany.",
+            options: [
+                { text: "The Frankfurt School in the 1930s.", isCorrect: true, rationale: "Critical Theory was developed by thinkers like Horkheimer and Adorno at the Frankfurt School to challenge power structures." },
+                { text: "The University of Cape Town in 1994.", isCorrect: false, rationale: "It is much older and originated in Germany, though it is highly relevant to SA." },
+                { text: "Brazil in the 1960s.", isCorrect: false, rationale: "While Paulo Freire (Brazilian) added to it, the theory itself started in Germany." },
+                { text: "The United States during the Civil Rights movement.", isCorrect: false, rationale: "Critical Theory has influenced many movements, but its roots are in the Frankfurt School." }
             ]
         },
         {
-            question: "Who oversees the National Qualifications Framework (NQF)?",
-            hint: "It's the 'Authority'.",
+            question: "What is the core argument of Critical Theory regarding society?",
+            hint: "Is society 'neutral'?",
             options: [
-                { text: "SAQA", isCorrect: true, rationale: "The South African Qualifications Authority (SAQA) oversees the NQF." },
-                { text: "The President", isCorrect: false, rationale: "The President leads the country, but a specific authority manages the NQF." },
-                { text: "Umalusi", isCorrect: false, rationale: "Umalusi is a quality council for specific sectors, but SAQA oversees the whole NQF." },
-                { text: "The SGB", isCorrect: false, rationale: "SGBs are for individual schools." }
+                { text: "Society is not neutral; it is shaped by power structures that benefit some while oppressing others.", isCorrect: true, rationale: "Critical theorists argue that 'truth' and 'knowledge' are often constructed by those in power to maintain the status quo." },
+                { text: "Society is a fair system where everyone has equal opportunity from birth.", isCorrect: false, rationale: "Critical Theory explicitly challenges this 'liberal' view by pointing out systemic inequalities." },
+                { text: "Society is governed by biological laws that cannot be changed.", isCorrect: false, rationale: "The theory argues that society is socially constructed and can therefore be changed (emancipation)." },
+                { text: "Society should be ignored in favor of individual achievement.", isCorrect: false, rationale: "Critical Theory focuses on the relationship between the individual and social power structures." }
+            ]
+        },
+        {
+            question: "What is the 'Main Goal' of Critical Theory in an educational context?",
+            hint: "It starts with 'E'.",
+            options: [
+                { text: "Emancipation", isCorrect: true, rationale: "The goal is to free learners from unfair systems so they can become active, critical citizens." },
+                { text: "Examination", isCorrect: false, rationale: "While it examines power, the ultimate GOAL is the freedom/emancipation of the learner." },
+                { text: "Efficiency", isCorrect: false, rationale: "Efficiency is often a goal of the 'Banking Model' which Critical Theory rejects." },
+                { text: "Equalization", isCorrect: false, rationale: "While related, the specific term used by theorists like Freire is 'Emancipation'." }
+            ]
+        },
+        {
+            question: "Which model of education did Paulo Freire criticize for treating students as 'empty containers'?",
+            hint: "Think about where you put money.",
+            options: [
+                { text: "The Banking Model", isCorrect: true, rationale: "In the banking model, teachers 'deposit' facts into passive students, keeping them powerless." },
+                { text: "Problem-Posing Education", isCorrect: false, rationale: "This was Freire's proposed SOLUTION, not his critique." },
+                { text: "Inquiry-Based Learning", isCorrect: false, rationale: "IBL is similar to Freire's goals, not his critique." },
+                { text: "The CAPS Model", isCorrect: false, rationale: "CAPS is a modern SA policy; Freire's critique was of traditional rote-learning systems globally." }
+            ]
+        },
+        {
+            question: "In a South African context, how does Critical Theory view the 'Hidden Curriculum'?",
+            hint: "Unspoken lessons.",
+            options: [
+                { text: "As unspoken lessons about power, race, and class that are often learned implicitly in schools.", isCorrect: true, rationale: "Critical Theory encourages teachers to look at what ISN'T in the textbooks but is still being taught (e.g., whose culture is 'normal')." },
+                { text: "As the secret list of exam answers kept by the principal.", isCorrect: false, rationale: "The hidden curriculum refers to social and cultural norms, not literal secrets." },
+                { text: "As a special program for students with learning disabilities.", isCorrect: false, rationale: "Incorrect name; that would be 'inclusive education'." },
+                { text: "As the curriculum used only in private schools.", isCorrect: false, rationale: "Every school has a hidden curriculum, regardless of its official status." }
+            ]
+        },
+        {
+            question: "What is a common criticism of Critical Theory?",
+            hint: "Is it too 'negative'?",
+            options: [
+                { text: "It is often too negative and lacks clear, practical solutions for daily classroom use.", isCorrect: true, rationale: "Critics argue that while it is good at finding problems, it doesn't always tell teachers exactly 'how' to teach a specific lesson like CAPS does." },
+                { text: "It is too easy for teachers to implement.", isCorrect: false, rationale: "It is actually considered very difficult to implement, especially in large classes." },
+                { text: "It focuses too much on Math and Science.", isCorrect: false, rationale: "It is a social and philosophical theory, not a subject-specific one." },
+                { text: "It was written only for wealthy countries.", isCorrect: false, rationale: "It is highly influential in developing nations, especially through Freire's work in Brazil." }
             ]
         },
 
@@ -359,31 +391,36 @@ const appData = {
         // --- White Paper (1995) & Transformation ---
         { 
             topic: "White Paper (1995) & Transformation",
-            question: "Discuss the primary aim of the White Paper on Education and Training (1995) and how it sought to transform the South African education system.",
-            answer: "The primary aim was to eliminate the divided and unequal apartheid structures and build a single, united national system for all South Africans. It sought transformation through democratization, ensuring that all stakeholders (parents, teachers, and learners) have a say in school governance via School Governing Bodies (SGBs). It also introduced the concept of Lifelong Learning, integrating education and training to provide opportunities for those previously excluded by Bantu Education."
+            question: "Analyze how the White Paper on Education and Training (1995) sought to transform the South African education system through the principles of democratization and lifelong learning.",
+            answer: "The 1995 White Paper was the first major post-apartheid policy to target systemic transformation. It sought to: \n1. Democratize through Decentralization: Established School Governing Bodies (SGBs) to ensure parents, teachers, and learners have a direct say in school management, replacing the top-down apartheid control.\n2. Support Lifelong Learning: Integrated education and training into a single framework (leading to the NQF) to provide flexible learning paths for those previously excluded by Bantu Education.\n3. Institutional Redress: Aimed to eliminate the 19 racially-divided departments and build one unified system based on equity and access for all citizens."
         },
         { 
             topic: "White Paper (1995) & Transformation",
-            question: "Explain the three core principles of redress, equity, and access as promoted by the 1995 White Paper.",
-            answer: "1. Redress: Specifically refers to correcting the historical imbalances and inequalities inherited from the apartheid era, often by providing more resources to those previously deprived.\n2. Equity: Ensuring fairness in the distribution of resources and opportunities, so that every learner has what they need to succeed.\n3. Access: Opening the doors of learning to all citizens, regardless of race, gender, or location, making education a fundamental right for everyone."
-        },
-        { 
-            topic: "White Paper (1995) & Transformation",
-            question: "Analyze the role of School Governing Bodies (SGBs) in promoting democratization within the South African school system.",
-            answer: "SGBs were established to decentralize power from the central government to the local school community. By involving parents, teachers, non-teaching staff, and learners (in secondary schools), SGBs ensure that school decisions reflect the needs and values of the community. This supports democratic values by fostering participation, transparency, and accountability in the management of school funds, policies, and environment."
+            question: "Discuss the 'three pillars' of transformation (Redress, Equity, and Access) as outlined in the 1995 White Paper.",
+            answer: "The transformation of SA education rests on three core principles: \n1. Redress: Correcting historical imbalances by providing more resources to previously disadvantaged schools and communities.\n2. Equity: Ensuring fairness in the distribution of resources and opportunities so that every learner has an equal chance to succeed.\n3. Access: Making education a fundamental human right by removing barriers (racial, geographical, or financial) that previously prevented citizens from entering the learning system."
         },
         // --- SAQA & NQF ---
         { 
             topic: "SAQA & NQF",
-            question: "Explain the relationship between SAQA and the NQF, and how they contribute to an integrated national education system.",
-            answer: "The South African Qualifications Authority (SAQA) is the statutory body that oversees the development and implementation of the National Qualifications Framework (NQF). The NQF is a comprehensive system that classifies, registers, and publishes all national qualifications. Together, they create an integrated system that ensures national standards are met across all levels of education (from primary school to doctorate) and across different sectors (academic and vocational)."
+            question: "Explain the role of SAQA in managing the National Qualifications Framework (NQF) and how this contributes to an integrated national system.",
+            answer: "SAQA (South African Qualifications Authority) is the statutory body responsible for developing and implementing the NQF. Its role is to: \n1. Classify, Register, and Publish: Every national qualification is registered on the framework to ensure it meets national standards.\n2. Integration: By creating a unified framework, SAQA bridges the gap between academic (school/university) and vocational (technical) learning, allowing for credit transfer and mobility between different sectors."
+        },
+        // --- Critical Theory ---
+        { 
+            topic: "Critical Theory",
+            question: "Discuss the origins and core philosophical arguments of Critical Theory in the context of educational transformation.",
+            answer: "Critical Theory originated at the Frankfurt School in 1930s Germany (figures like Horkheimer and Adorno). Its core arguments are: \n1. Society is not neutral: Knowledge and 'truth' are constructed by power structures to benefit dominant groups.\n2. Education as a Tool: Education can either be used to reinforce oppression (the 'Banking Model') or to achieve emancipation (freedom from unfair systems).\n3. Transformation Goal: The ultimate aim is to create 'active, critical citizens' who can identify and challenge social injustice."
         },
         { 
-            topic: "SAQA & NQF",
-            question: "How do the NQF and SAQA support the concept of 'Lifelong Learning' in South Africa?",
-            answer: "They support Lifelong Learning by creating a flexible and integrated framework where learning achievements can be formally recognized and registered. This allows learners to move more easily between different institutions and sectors (e.g., from a vocational college to a university) by facilitating the transfer of credits. This mobility ensures that learning is not seen as a one-time event but as a continuous process throughout a person's life."
+            topic: "Critical Theory",
+            question: "Analyze Paulo Freire's contribution to Critical Theory, specifically his critique of the 'Banking Model' versus 'Problem-Posing Education'.",
+            answer: "Paulo Freire made Critical Theory practical for the classroom through two contrasting models: \n1. The Banking Model: A critique of traditional education where teachers 'deposit' facts into passive students. This model treats students as empty containers and reinforces powerlessness.\n2. Problem-Posing Education: Freire's alternative where teachers and students are co-creators of knowledge. They work together to ask critical questions about real-world problems (e.g., poverty or inequality) and take action to change them, a process called 'praxis'."
         },
-        // --- NCS to CAPS ---
+        { 
+            topic: "Critical Theory",
+            question: "Evaluate the relevance of Critical Theory in South Africa, focusing on the 'Hidden Curriculum' and its relationship to the 1995 White Paper goals.",
+            answer: "Critical Theory is highly relevant to SA because it helps us: \n1. Challenge the Legacy of Bantu Education: It provides tools to dismantle the 'hidden curriculum'—the unspoken lessons about power and race that were used to keep learners in low-skilled roles.\n2. Align with White Paper Goals: By pushing for active learning and social justice, it directly supports the goals of redress and equity by empowering learners to question systemic inequalities inherited from the past."
+        },
         { 
             topic: "NCS to CAPS",
             question: "Compare the National Curriculum Statement (NCS) and the Curriculum and Assessment Policy Statement (CAPS), focusing on why the transition was necessary.",
@@ -454,18 +491,18 @@ const appData = {
         }
     ],
     story: [
-        "Critical Theory is an important approach in education that helps us understand how power, inequality and injustice operate in schools. It emerged not just to describe society, but to change it.",
-        "The theory developed in the 1930s in Germany by a group of thinkers called the Frankfurt School. Key figures include Max Horkheimer, Theodor Adorno, Jurgen Habermas, and later, the Brazilian educator Paulo Freire.",
-        "The core argument is that society is not neutral. It is shaped by political, economic, and cultural power structures that benefit some groups while oppressing others. Critical Theory suggests that 'truth' and knowledge are often constructed by those who hold power.",
-        "Therefore, education is never neutral either: it can either support oppression or help people become free from it. The main goal of Critical Theory is emancipation—freeing people from unfair systems so they can participate fully in society.",
-        "Paulo Freire made these ideas practical for teachers. He criticised the traditional 'banking model of education', where teachers 'deposit' knowledge into passive students who just memorise facts. He argued this keeps learners powerless.",
-        "Instead, Freire promoted 'problem-posing education'. In this model, teachers and students work together to ask questions about real-life problems and take action to change unfair situations. They become co-creators of knowledge.",
-        "In South Africa, Critical Theory is extremely relevant because of our history. Before 1994, Bantu Education was designed to keep black learners in low-skilled jobs and reinforce racial inequality as 'normal'.",
-        "Today, Critical Theory helps us challenge remaining problems. It encourages teachers to examine the 'hidden curriculum'—the unspoken lessons about power, race, class, and gender that students learn (like whose culture is represented in textbooks).",
-        "It also pushes for active learning where students discuss real social issues such as poverty, unemployment, or discrimination. This aligns with the 1995 White Paper goals of transformation, redress, and equity.",
-        "However, the theory has its critics. Some argue it is too negative, focusing on problems without offering clear practical solutions. Others worry it rejects objective truth too strongly, making it hard to follow strict rules like CAPS.",
-        "In a South African context with large classes and limited resources, applying 'problem-posing' methods every day can be difficult. Some also fear that constant criticism might make learners cynical rather than hopeful.",
-        "In conclusion, while it has limitations, Critical Theory provides essential tools for understanding power in education. It supports South Africa's goals of transformation by helping learners become active citizens who question injustice and build a fairer society."
+        "Critical Theory is a powerful framework in education that helps us understand how power, inequality, and injustice operate within school systems. It doesn't just aim to describe society; it aims to transform it.",
+        "The theory originated in the 1930s in Germany at the Frankfurt School. Key figures include Max Horkheimer, Theodor Adorno, and Jurgen Habermas, while the Brazilian educator Paulo Freire later applied these ideas to education.",
+        "The core philosophy of Critical Theory is that society is not neutral. It is shaped by political, economic, and cultural power structures that benefit dominant groups while marginalizing others.",
+        "A central argument is that 'truth' and knowledge are often socially constructed by those who hold power. This means that what we learn in school often reflects the values of the powerful rather than being objective fact.",
+        "Because education is never neutral, it can either be a tool for oppression or a tool for emancipation. The ultimate goal of Critical Theory in schools is emancipation—freeing learners from unfair social systems.",
+        "Paulo Freire criticized traditional education, calling it the 'Banking Model'. In this model, teachers 'deposit' facts into passive students who are expected to memorize and repeat them without question.",
+        "As an alternative, Freire promoted 'Problem-Posing Education'. In this co-creative model, teachers and students work together to ask critical questions about real-world issues and take action to solve them (praxis).",
+        "In the South African context, Critical Theory is essential for challenging the legacy of Bantu Education, which was specifically designed to keep black learners in low-skilled roles and reinforce racial inequality.",
+        "Critical Theory encourages educators to examine the 'Hidden Curriculum'—the unspoken lessons about power, race, and class that students learn through the school environment and social interactions.",
+        "It pushes for active learning where students engage with pressing social issues like poverty, unemployment, and discrimination. This directly aligns with the 1995 White Paper goals of transformation, redress, and equity.",
+        "Critics of Critical Theory argue that it can be too negative, focusing on systemic problems without offering clear, practical classroom solutions or respecting objective standards like those found in CAPS.",
+        "In conclusion, Critical Theory provides vital tools for understanding power in education. By fostering critical thinking, it supports South Africa's transformation goals and helps learners become active citizens in a democracy."
     ],
     skeletonSummary: [
         "Introduction: Define Critical Theory & Power.",
