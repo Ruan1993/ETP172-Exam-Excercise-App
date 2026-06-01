@@ -599,6 +599,7 @@ const oeNavInfo = document.querySelector('.navigation-info');
 // Audio Review
 const arCurrentNumEl = document.getElementById('ar-current-num');
 const arTotalNumEl = document.getElementById('ar-total-num');
+const arQuestionSelector = document.getElementById('ar-question-selector');
 const arStatusEl = document.getElementById('ar-status');
 const arQuestionTextEl = document.getElementById('ar-question-text');
 const arAnswerBox = document.getElementById('ar-answer-box');
@@ -1058,9 +1059,14 @@ function populateVoiceList() {
     if (savedVoice) {
         arVoiceSelect.value = savedVoice;
     } else {
-        // Default to first English voice if available
-        const firstEnglish = sortedVoices.find(v => v.lang.startsWith('en'));
-        if (firstEnglish) arVoiceSelect.value = firstEnglish.name;
+        // Default to Microsoft Zira if available, otherwise first English
+        const zira = sortedVoices.find(v => v.name.includes('Zira'));
+        if (zira) {
+            arVoiceSelect.value = zira.name;
+        } else {
+            const firstEnglish = sortedVoices.find(v => v.lang.startsWith('en'));
+            if (firstEnglish) arVoiceSelect.value = firstEnglish.name;
+        }
     }
 }
 
@@ -1115,6 +1121,16 @@ function initAudioReview() {
     if (currentState.audioReview.timeoutId) clearTimeout(currentState.audioReview.timeoutId);
     
     arTotalNumEl.textContent = currentState.audioReview.questions.length;
+    
+    // Populate question selector
+    arQuestionSelector.innerHTML = '';
+    currentState.audioReview.questions.forEach((q, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = `Question ${index + 1}`;
+        arQuestionSelector.appendChild(option);
+    });
+
     renderARQuestion();
     showScreen('audioReview');
 }
@@ -1128,11 +1144,13 @@ function renderARQuestion() {
     arControlBtn.textContent = "Start Audio Review";
     arPauseBtn.classList.add('hidden');
     
+    // Update selector value
+    arQuestionSelector.value = currentState.audioReview.currentIndex;
+
     // Show/Hide navigation buttons
     arPrevBtn.classList.toggle('hidden', currentState.audioReview.currentIndex === 0);
     arNextBtn.classList.toggle('hidden', currentState.audioReview.currentIndex === currentState.audioReview.questions.length - 1);
     
-    // If not first question, show nav
     if (currentState.audioReview.currentIndex > 0 || currentState.audioReview.currentIndex < currentState.audioReview.questions.length - 1) {
         arPrevBtn.classList.remove('hidden');
         arNextBtn.classList.remove('hidden');
@@ -1191,8 +1209,8 @@ function playARSequence() {
     speakText(question.question, () => {
         if (!currentState.audioReview.isPlaying) return;
 
-        // 2. Pause 3 seconds
-        arStatusEl.textContent = "Thinking (3s)...";
+        // 2. Pause 5 seconds (Thinking time)
+        arStatusEl.textContent = "Thinking (5s)...";
         currentState.audioReview.timeoutId = setTimeout(() => {
             if (!currentState.audioReview.isPlaying) return;
 
@@ -1226,7 +1244,7 @@ function playARSequence() {
                     arPauseBtn.classList.add('hidden');
                 }
             });
-        }, 3000);
+        }, 5000); // 5-second thinking pause
     }, arSpeechRateInput.value);
 }
 
@@ -1425,6 +1443,12 @@ arControlBtn.onclick = toggleAudioReview;
 arPauseBtn.onclick = togglePauseResume;
 arPrevBtn.onclick = prevARQuestion;
 arNextBtn.onclick = nextARQuestion;
+
+arQuestionSelector.onchange = (e) => {
+    stopAudioReview();
+    currentState.audioReview.currentIndex = parseInt(e.target.value);
+    renderARQuestion();
+};
 
 oeQuestionSelector.onchange = (e) => {
     currentState.openEnded.currentIndex = parseInt(e.target.value);
