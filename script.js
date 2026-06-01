@@ -603,6 +603,7 @@ const arStatusEl = document.getElementById('ar-status');
 const arQuestionTextEl = document.getElementById('ar-question-text');
 const arAnswerBox = document.getElementById('ar-answer-box');
 const arAnswerTextEl = document.getElementById('ar-answer-text');
+const arVoiceSelect = document.getElementById('ar-voice-select');
 const arSpeechRateInput = document.getElementById('ar-speech-rate');
 const arRateValueEl = document.getElementById('ar-rate-value');
 const arAutoPlayToggle = document.getElementById('ar-auto-play-toggle');
@@ -1028,6 +1029,46 @@ function updateStoryProgress() {
 /**
  * Gamification Features
  */
+let voices = [];
+
+function populateVoiceList() {
+    voices = window.speechSynthesis.getVoices();
+    if (voices.length === 0) return;
+
+    arVoiceSelect.innerHTML = '';
+    
+    // Sort and filter: prioritize English
+    const sortedVoices = [...voices].sort((a, b) => {
+        const aIsEnglish = a.lang.startsWith('en');
+        const bIsEnglish = b.lang.startsWith('en');
+        if (aIsEnglish && !bIsEnglish) return -1;
+        if (!aIsEnglish && bIsEnglish) return 1;
+        return a.name.localeCompare(b.name);
+    });
+
+    sortedVoices.forEach(voice => {
+        const option = document.createElement('option');
+        option.textContent = `${voice.name} (${voice.lang})`;
+        option.value = voice.name;
+        arVoiceSelect.appendChild(option);
+    });
+
+    // Load saved preference
+    const savedVoice = localStorage.getItem('preferredVoice');
+    if (savedVoice) {
+        arVoiceSelect.value = savedVoice;
+    } else {
+        // Default to first English voice if available
+        const firstEnglish = sortedVoices.find(v => v.lang.startsWith('en'));
+        if (firstEnglish) arVoiceSelect.value = firstEnglish.name;
+    }
+}
+
+// Ensure voices are loaded (some browsers fire event, others don't)
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
 function updateExamCountdown() {
     // Setting exam date to June 3, 2026
     const examDate = new Date('June 3, 2026').getTime();
@@ -1208,9 +1249,18 @@ function nextARQuestion() {
 function speakText(text, onEndCallback, rate = 0.8) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'));
-    if (preferredVoice) utterance.voice = preferredVoice;
+    
+    // Use selected voice
+    const selectedVoiceName = arVoiceSelect.value;
+    const voice = voices.find(v => v.name === selectedVoiceName);
+    if (voice) {
+        utterance.voice = voice;
+    } else {
+        // Fallback logic if voices aren't loaded or selected
+        const fallbackVoices = window.speechSynthesis.getVoices();
+        const preferredVoice = fallbackVoices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'));
+        if (preferredVoice) utterance.voice = preferredVoice;
+    }
     
     utterance.rate = parseFloat(rate);
     utterance.onend = onEndCallback;
@@ -1367,6 +1417,10 @@ arSpeechRateInput.oninput = (e) => {
     arRateValueEl.textContent = `${e.target.value}x`;
 };
 
+arVoiceSelect.onchange = (e) => {
+    localStorage.setItem('preferredVoice', e.target.value);
+};
+
 arControlBtn.onclick = toggleAudioReview;
 arPauseBtn.onclick = togglePauseResume;
 arPrevBtn.onclick = prevARQuestion;
@@ -1384,5 +1438,6 @@ resetBuilderBtn.onclick = initSkeletonBuilder;
 restartStoryBtn.onclick = initStory;
 
 // Initialize
+populateVoiceList();
 updateExamCountdown();
 showScreen('landing');

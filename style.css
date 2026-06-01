@@ -797,8 +797,14 @@ input:checked + .toggle-slider:before {
     width: 100%;
 }
 
-.ar-nav-buttons .btn-small {
-    min-width: 120px;
+.ar-nav-buttons .btn-primary {
+    min-width: 140px;
+    padding: 10px 20px;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
+}
+
+#ar-voice-select {
+    width: 200px;
 }
 
 /* Results */

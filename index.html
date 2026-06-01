@@ -209,6 +209,12 @@
 
             <div class="tts-controls">
               <div class="control-group">
+                <label for="ar-voice-select">Select Voice:</label>
+                <select id="ar-voice-select" class="oe-select">
+                  <option value="">Loading voices...</option>
+                </select>
+              </div>
+              <div class="control-group">
                 <label for="ar-speech-rate">Speech Speed:</label>
                 <input
                   type="range"
@@ -237,10 +243,10 @@
                 Pause
               </button>
               <div class="ar-nav-buttons mt-20">
-                <button id="ar-prev-btn" class="btn-small hidden">
+                <button id="ar-prev-btn" class="btn-primary hidden">
                   ← Previous
                 </button>
-                <button id="ar-next-btn" class="btn-small hidden">
+                <button id="ar-next-btn" class="btn-primary hidden">
                   Next →
                 </button>
               </div>
