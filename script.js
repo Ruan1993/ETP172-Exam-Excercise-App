@@ -54,6 +54,63 @@ const appData = {
             }
         ]
     },
+    essayMap: {
+        title: "Critical Theory Essay Structure",
+        content: "Essay: Critical Theory",
+        children: [
+            {
+                content: "Introduction",
+                summary: "Setting the stage for the essay by defining terms and origins.",
+                children: [
+                    { content: "Hook/Background", summary: "Originated in 1930s Germany (Frankfurt School) to address social injustice." },
+                    { content: "Core Definitions", summary: "Define 'Pathological' (sick) society and 'Emancipation' (freedom)." },
+                    { content: "Thesis Statement", summary: "Critical Theory provides the tools to dismantle inequality and transform SA education." }
+                ]
+            },
+            {
+                content: "Body Paragraphs",
+                summary: "The core arguments of the essay.",
+                children: [
+                    {
+                        content: "Body 1: Freire's Critique",
+                        summary: "The shift from passive to active learning.",
+                        children: [
+                            { content: "Main Argument", summary: "The 'Banking Model' treats students as passive containers, reinforcing powerlessness." },
+                            { content: "Evidence", summary: "Contrast with 'Problem-Posing Education' where knowledge is co-created." },
+                            { content: "Concluding Sentence", summary: "True learning requires dialogue and critical reflection." }
+                        ]
+                    },
+                    {
+                        content: "Body 2: SA Context",
+                        summary: "Applying theory to the local landscape.",
+                        children: [
+                            { content: "Main Argument", summary: "Bantu Education produced 'technocrats' designed to follow orders." },
+                            { content: "Evidence", summary: "The 'Hidden Curriculum' teaches unspoken lessons about power and race." },
+                            { content: "Concluding Sentence", summary: "Transformation requires exposing these hidden biases to build active citizens." }
+                        ]
+                    },
+                    {
+                        content: "Body 3: Application & Limits",
+                        summary: "Practicality in modern classrooms.",
+                        children: [
+                            { content: "Main Argument", summary: "Theory supports active learning but faces daily practical challenges." },
+                            { content: "Evidence", summary: "Large class sizes and strict CAPS pacing can limit deep critical inquiry." },
+                            { content: "Concluding Sentence", summary: "Despite limits, the goal of redress and equity remains essential." }
+                        ]
+                    }
+                ]
+            },
+            {
+                content: "Conclusion",
+                summary: "Wrapping up and looking forward.",
+                children: [
+                    { content: "Summary", summary: "Recap: Critical Theory as a tool for challenging systemic inequality." },
+                    { content: "Final Thought", summary: "Education is not neutral; teachers have a moral role in social justice." },
+                    { content: "Call to Action", summary: "Empower the next generation to build a fairer, democratic society." }
+                ]
+            }
+        ]
+    },
     quiz: [
         // --- Q1: White Paper (1995) and Transformation ---
         {
@@ -672,6 +729,8 @@ const nodeModal = document.getElementById('node-modal');
 const modalTitle = document.getElementById('modal-title');
 const modalBody = document.getElementById('modal-body');
 const closeModal = document.getElementById('close-modal');
+const showExamMapBtn = document.getElementById('show-exam-map');
+const showEssayMapBtn = document.getElementById('show-essay-map');
 
 // Gamification
 const currentStreakEl = document.getElementById('current-streak');
@@ -1355,9 +1414,18 @@ function sanitizeMapData(node) {
     };
 }
 
-function initStudyMap() {
+function initStudyMap(mapData = appData.studyMap) {
     showScreen('studyMap');
     
+    // Update active button state
+    if (mapData === appData.studyMap) {
+        showExamMapBtn.classList.replace('btn-secondary', 'btn-primary');
+        showEssayMapBtn.classList.replace('btn-primary', 'btn-secondary');
+    } else {
+        showEssayMapBtn.classList.replace('btn-secondary', 'btn-primary');
+        showExamMapBtn.classList.replace('btn-primary', 'btn-secondary');
+    }
+
     const svg = document.querySelector('#mindmap-svg');
     if (!mm) {
         // Initialize Markmap
@@ -1385,9 +1453,13 @@ function initStudyMap() {
     }
 
     // Load the sanitized data into markmap
-    const sanitizedData = sanitizeMapData(appData.studyMap);
+    const sanitizedData = sanitizeMapData(mapData);
     mm.setData(sanitizedData);
-    mm.fit();
+    
+    // Use a small timeout to ensure SVG dimensions are settled before fitting
+    setTimeout(() => {
+        mm.fit();
+    }, 100);
 }
 
 function showNodeDetail(title, summary) {
@@ -1552,7 +1624,9 @@ startQuizBtn.onclick = initQuiz;
 startStoryBtn.onclick = initStory;
 startSkeletonBtn.onclick = initSkeletonOnly;
 startAudioReviewBtn.onclick = initAudioReview;
-startStudyMapBtn.onclick = initStudyMap;
+startStudyMapBtn.onclick = () => initStudyMap(appData.studyMap);
+showExamMapBtn.onclick = () => initStudyMap(appData.studyMap);
+showEssayMapBtn.onclick = () => initStudyMap(appData.essayMap);
 startOpenEndedBtn.onclick = initOpenEnded;
 backToMenuBtn.onclick = () => showScreen('landing');
 

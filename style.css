@@ -422,6 +422,12 @@ button {
     animation: fadeOut 0.5s ease-out forwards;
 }
 
+.map-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
 .map-container {
     width: 100%;
     height: calc(100vh - 250px);
