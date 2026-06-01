@@ -490,33 +490,30 @@ const appData = {
             answer: "Vygotsky's theory and neuroplasticity are two sides of the same coin. Social constructivism describes the 'method' (learning through social interaction and guidance in the ZPD), while neuroplasticity describes the 'biological result'. When a student interacts with an MKO and exerts mental effort to cross their ZPD, that social and cognitive activity triggers the brain to physically create and strengthen the neural pathways required to master the new skill. Social interaction is the fuel for biological brain growth."
         }
     ],
-    story: [
-        "Critical Theory is a powerful framework in education that helps us understand how power, inequality, and injustice operate within school systems. It doesn't just aim to describe society; it aims to transform it.",
-        "The theory originated in the 1930s in Germany at the Frankfurt School. Key figures include Max Horkheimer, Theodor Adorno, and Jurgen Habermas, while the Brazilian educator Paulo Freire later applied these ideas to education.",
-        "The core philosophy of Critical Theory is that society is not neutral. It is shaped by political, economic, and cultural power structures that benefit dominant groups while marginalizing others.",
-        "A central argument is that 'truth' and knowledge are often socially constructed by those who hold power. This means that what we learn in school often reflects the values of the powerful rather than being objective fact.",
-        "Because education is never neutral, it can either be a tool for oppression or a tool for emancipation. The ultimate goal of Critical Theory in schools is emancipation—freeing learners from unfair social systems.",
-        "Paulo Freire criticized traditional education, calling it the 'Banking Model'. In this model, teachers 'deposit' facts into passive students who are expected to memorize and repeat them without question.",
-        "As an alternative, Freire promoted 'Problem-Posing Education'. In this co-creative model, teachers and students work together to ask critical questions about real-world issues and take action to solve them (praxis).",
-        "In the South African context, Critical Theory is essential for challenging the legacy of Bantu Education, which was specifically designed to keep black learners in low-skilled roles and reinforce racial inequality.",
-        "Critical Theory encourages educators to examine the 'Hidden Curriculum'—the unspoken lessons about power, race, and class that students learn through the school environment and social interactions.",
-        "It pushes for active learning where students engage with pressing social issues like poverty, unemployment, and discrimination. This directly aligns with the 1995 White Paper goals of transformation, redress, and equity.",
-        "Critics of Critical Theory argue that it can be too negative, focusing on systemic problems without offering clear, practical classroom solutions or respecting objective standards like those found in CAPS.",
-        "In conclusion, Critical Theory provides vital tools for understanding power in education. By fostering critical thinking, it supports South Africa's transformation goals and helps learners become active citizens in a democracy."
+    story: [ 
+        "Critical Theory is an important approach in education that helps us understand how power, inequality, and injustice operate in schools.", 
+        "The theory started in Germany in the 1930s by the Frankfurt School. Key thinkers include Max Horkheimer, Theodor Adorno, Jurgen Habermas, Paulo Freire, and Peter McLaren.", 
+        "The theory says human societies are pathological, or 'sick'. We are like pawns in a chess game where the rules favour the rich and powerful.", 
+        "Power structures control not just society, but the way we think. There is no objective truth; all truth is constructed by those in power.", 
+        "It is a philosophy of cynicism and disillusionment. The main goal is emancipation—to free people from unfair systems.", 
+        "Paulo Freire criticised the 'banking model of education'. Teachers pour knowledge into passive students who just memorise facts.", 
+        "Instead, he promoted 'problem-posing education', where teachers and students work together to solve real-life problems.", 
+        "Critical Theory is very relevant in South Africa because of apartheid. Bantu Education turned learners into passive consumers and produced technocrats—people who just follow orders.", 
+        "Teachers must help learners reflect critically on society and expose the 'hidden curriculum'—the unspoken lessons about power, race, and class.", 
+        "Critical Theory supports active learning about real issues like poverty and discrimination. It matches the White Paper (1995) goals of redress, equity, and transformation.", 
+        "It has criticisms: it is very negative, cynical, and ideological. It rejects objective truth too strongly, which can confuse teachers following CAPS.", 
+        "In large South African classes, problem-posing methods are hard to use every day, and critics ask: if we replace capitalism, what do we replace it with?", 
+        "In conclusion, Critical Theory gives educators tools to challenge inequality. It supports South Africa’s transformation and helps create active citizens who build a fairer society."  
     ],
-    skeletonSummary: [
-        "Introduction: Define Critical Theory & Power.",
-        "Origins: Frankfurt School & German Roots.",
-        "Core Philosophy: Society is not neutral.",
-        "The Nature of Truth: Constructed by Power.",
-        "Emancipation: The Main Goal.",
-        "Banking Model: Freire's Critique.",
-        "Problem-Posing: Freire's Alternative.",
-        "SA Context: Apartheid & Bantu Education.",
-        "Hidden Curriculum: Unspoken Power Lessons.",
-        "Active Learning: Engaging Social Issues.",
-        "Criticisms: Lack of Practical Solutions.",
-        "Conclusion: Active Citizens & Democracy."
+    skeletonSummary: [ 
+        "Introduction: Power & Injustice in schools.", 
+        "Origins: Frankfurt School & Key Thinkers.", 
+        "Core Definitions: Pathological society & Emancipation.", 
+        "The Banking Model: Freire's Critique.", 
+        "SA Context: Bantu Education & Technocrats.", 
+        "Application: Hidden Curriculum & Active Learning.", 
+        "Criticisms: Negativity & Practicality.", 
+        "Conclusion: Building a fairer society." 
     ]
 };
 
