@@ -1344,6 +1344,17 @@ function nextARQuestion() {
  */
 let mm = null;
 
+/**
+ * Recursively sanitize the study map data to ensure 'children' property exists
+ * even for leaf nodes, preventing Markmap .map() errors.
+ */
+function sanitizeMapData(node) {
+    return {
+        ...node,
+        children: node.children ? node.children.map(sanitizeMapData) : []
+    };
+}
+
 function initStudyMap() {
     showScreen('studyMap');
     
@@ -1373,8 +1384,9 @@ function initStudyMap() {
         };
     }
 
-    // Load the data into markmap
-    mm.setData(appData.studyMap);
+    // Load the sanitized data into markmap
+    const sanitizedData = sanitizeMapData(appData.studyMap);
+    mm.setData(sanitizedData);
     mm.fit();
 }
 
