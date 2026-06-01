@@ -740,16 +740,19 @@ const achievementNameEl = document.getElementById('achievement-name');
 
 // Story
 const storyContent = document.getElementById('story-content');
+const prevStoryBtn = document.getElementById('prev-story-btn');
 const nextStoryBtn = document.getElementById('next-story-btn');
 const readAloudBtn = document.getElementById('read-aloud-btn');
 const restartStoryBtn = document.getElementById('restart-story-btn');
 const storyProgressBar = document.getElementById('story-progress-bar');
 const ttsControlsEl = document.querySelector('.tts-controls');
+const storyVoiceSelect = document.getElementById('story-voice-select');
 const speechRateInput = document.getElementById('speech-rate');
 const rateValueEl = document.getElementById('rate-value');
 const autoPlayToggle = document.getElementById('auto-play-toggle');
 const startBuilderBtn = document.getElementById('start-builder-btn');
 const checkStructureBtn = document.getElementById('check-structure-btn');
+const autoArrangeBtn = document.getElementById('auto-arrange-btn');
 const readStructureBtn = document.getElementById('read-structure-btn');
 const resetBuilderBtn = document.getElementById('reset-builder-btn');
 const skeletonBuilderEl = document.getElementById('skeleton-builder');
@@ -936,39 +939,57 @@ function initStory() {
     showScreen('story');
     updateStoryProgress();
     
+    prevStoryBtn.classList.add('hidden');
     nextStoryBtn.classList.remove('hidden');
     readAloudBtn.classList.remove('hidden');
     startBuilderBtn.classList.add('hidden');
     checkStructureBtn.classList.add('hidden');
+    autoArrangeBtn.classList.add('hidden');
     resetBuilderBtn.classList.add('hidden');
     restartStoryBtn.classList.add('hidden');
 }
 
 function renderStorySegment() {
+    storyContent.innerHTML = ''; // Clear for cleaner navigation
     const segmentText = appData.story[currentState.story.currentIndex];
     const segmentEl = document.createElement('div');
     segmentEl.className = 'story-segment';
     segmentEl.textContent = segmentText;
     storyContent.appendChild(segmentEl);
     
-    // Scroll to bottom
-    segmentEl.scrollIntoView({ behavior: 'smooth' });
+    // Update nav buttons
+    prevStoryBtn.classList.toggle('hidden', currentState.story.currentIndex === 0);
+    
+    if (currentState.story.currentIndex === appData.story.length - 1) {
+        nextStoryBtn.classList.add('hidden');
+        startBuilderBtn.classList.remove('hidden');
+    } else {
+        nextStoryBtn.classList.remove('hidden');
+        startBuilderBtn.classList.add('hidden');
+    }
 }
 
 function nextStorySegment() {
-    // Stop speech when moving to the next segment
-    window.speechSynthesis.cancel();
-    readAloudBtn.textContent = 'Read Aloud';
+    if (currentState.story.currentIndex < appData.story.length - 1) {
+        // Stop speech when moving
+        window.speechSynthesis.cancel();
+        readAloudBtn.textContent = 'Read Aloud';
 
-    currentState.story.currentIndex++;
-    if (currentState.story.currentIndex < appData.story.length) {
+        currentState.story.currentIndex++;
         renderStorySegment();
         updateStoryProgress();
-        
-        if (currentState.story.currentIndex === appData.story.length - 1) {
-            nextStoryBtn.classList.add('hidden');
-            startBuilderBtn.classList.remove('hidden');
-        }
+    }
+}
+
+function prevStorySegment() {
+    if (currentState.story.currentIndex > 0) {
+        // Stop speech when moving
+        window.speechSynthesis.cancel();
+        readAloudBtn.textContent = 'Read Aloud';
+
+        currentState.story.currentIndex--;
+        renderStorySegment();
+        updateStoryProgress();
     }
 }
 
@@ -1000,12 +1021,15 @@ function initSkeletonBuilder() {
     window.speechSynthesis.cancel();
     
     storyContent.classList.add('hidden');
-    ttsControlsEl.classList.add('hidden');
+    ttsControlsEl.classList.remove('hidden'); // Ensure TTS controls are visible
     skeletonBuilderEl.classList.remove('hidden');
     storyInstructionEl.classList.add('hidden');
     skeletonInstructionEl.classList.remove('hidden');
     startBuilderBtn.classList.add('hidden');
+    prevStoryBtn.classList.add('hidden');
+    nextStoryBtn.classList.add('hidden');
     checkStructureBtn.classList.remove('hidden');
+    autoArrangeBtn.classList.remove('hidden'); // Show auto-arrange
     readStructureBtn.classList.add('hidden'); // Hide until mastery
     resetBuilderBtn.classList.remove('hidden');
     restartStoryBtn.classList.remove('hidden');
@@ -1025,6 +1049,26 @@ function initSkeletonBuilder() {
         card.onclick = () => addToSequence(item, card);
         segmentsPoolEl.appendChild(card);
     });
+}
+
+function autoArrangeSkeleton() {
+    // 1. Reset current sequence
+    initSkeletonBuilder();
+    
+    // 2. Get the correctly ordered summary
+    const correctItems = appData.skeletonSummary.map((text, index) => ({ text, originalIndex: index }));
+    
+    // 3. Add them one by one to the sequence
+    correctItems.forEach(item => {
+        // Find the card in the pool
+        const cards = Array.from(segmentsPoolEl.querySelectorAll('.builder-card'));
+        const targetCard = cards.find(c => c.textContent === item.text);
+        if (targetCard) {
+            addToSequence(item, targetCard);
+        }
+    });
+    
+    showBuilderFeedback("Skeleton arranged automatically. Review the flow!", 'correct');
 }
 
 function readStructure() {
@@ -1155,7 +1199,9 @@ function populateVoiceList() {
     voices = window.speechSynthesis.getVoices();
     if (voices.length === 0) return;
 
+    // Clear both dropdowns
     arVoiceSelect.innerHTML = '';
+    storyVoiceSelect.innerHTML = '';
     
     // Sort and filter: prioritize English
     const sortedVoices = [...voices].sort((a, b) => {
@@ -1170,22 +1216,32 @@ function populateVoiceList() {
         const option = document.createElement('option');
         option.textContent = `${voice.name} (${voice.lang})`;
         option.value = voice.name;
-        arVoiceSelect.appendChild(option);
+        
+        // Add to both dropdowns
+        arVoiceSelect.appendChild(option.cloneNode(true));
+        storyVoiceSelect.appendChild(option.cloneNode(true));
     });
 
     // Load saved preference
     const savedVoice = localStorage.getItem('preferredVoice');
+    let targetVoice = null;
+
     if (savedVoice) {
-        arVoiceSelect.value = savedVoice;
+        targetVoice = savedVoice;
     } else {
         // Default to Microsoft Zira if available, otherwise first English
         const zira = sortedVoices.find(v => v.name.includes('Zira'));
         if (zira) {
-            arVoiceSelect.value = zira.name;
+            targetVoice = zira.name;
         } else {
             const firstEnglish = sortedVoices.find(v => v.lang.startsWith('en'));
-            if (firstEnglish) arVoiceSelect.value = firstEnglish.name;
+            if (firstEnglish) targetVoice = firstEnglish.name;
         }
+    }
+
+    if (targetVoice) {
+        arVoiceSelect.value = targetVoice;
+        storyVoiceSelect.value = targetVoice;
     }
 }
 
@@ -1479,23 +1535,33 @@ window.onclick = (event) => {
     }
 };
 
-function speakText(text, onEndCallback, rate = 0.7) {
+function speakText(text, onEndCallback, rate = null) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     
+    // Determine which voice select to use based on current view
+    let voiceSelect = arVoiceSelect;
+    let rateInput = arSpeechRateInput;
+
+    if (currentState.view === 'story') {
+        voiceSelect = storyVoiceSelect;
+        rateInput = speechRateInput;
+    }
+
     // Use selected voice
-    const selectedVoiceName = arVoiceSelect.value;
+    const selectedVoiceName = voiceSelect.value;
     const voice = voices.find(v => v.name === selectedVoiceName);
     if (voice) {
         utterance.voice = voice;
     } else {
-        // Fallback logic if voices aren't loaded or selected
+        // Fallback
         const fallbackVoices = window.speechSynthesis.getVoices();
         const preferredVoice = fallbackVoices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'));
         if (preferredVoice) utterance.voice = preferredVoice;
     }
     
-    utterance.rate = parseFloat(rate);
+    // Use rate from input if not explicitly provided
+    utterance.rate = rate !== null ? parseFloat(rate) : parseFloat(rateInput.value);
     utterance.onend = onEndCallback;
     window.speechSynthesis.speak(utterance);
 }
@@ -1513,22 +1579,8 @@ function toggleReadAloud() {
     const currentText = appData.story[currentState.story.currentIndex];
     if (!currentText) return;
 
-    const utterance = new SpeechSynthesisUtterance(currentText);
-    
-    // Optional: Select a clearer voice if available
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(v => v.lang.includes('en-GB') || v.lang.includes('en-US'));
-    if (preferredVoice) utterance.voice = preferredVoice;
-
-    // Dynamic speech rate from slider
-    utterance.rate = parseFloat(speechRateInput.value);
-    utterance.pitch = 1.0;
-
-    utterance.onstart = () => {
-        readAloudBtn.textContent = 'Stop Reading';
-    };
-
-    utterance.onend = () => {
+    readAloudBtn.textContent = 'Stop Reading';
+    speakText(currentText, () => {
         readAloudBtn.textContent = 'Read Aloud';
         
         // Auto-play next segment logic
@@ -1541,9 +1593,7 @@ function toggleReadAloud() {
                 }
             }, 1000); // 1-second delay
         }
-    };
-
-    window.speechSynthesis.speak(utterance);
+    });
 }
 
 /**
@@ -1647,14 +1697,28 @@ readAloudBtn.onclick = toggleReadAloud;
 
 speechRateInput.oninput = (e) => {
     rateValueEl.textContent = `${e.target.value}x`;
+    // Sync with Audio Review rate
+    arSpeechRateInput.value = e.target.value;
+    arRateValueEl.textContent = `${e.target.value}x`;
 };
 
 arSpeechRateInput.oninput = (e) => {
     arRateValueEl.textContent = `${e.target.value}x`;
+    // Sync with Story rate
+    speechRateInput.value = e.target.value;
+    rateValueEl.textContent = `${e.target.value}x`;
 };
 
 arVoiceSelect.onchange = (e) => {
     localStorage.setItem('preferredVoice', e.target.value);
+    // Sync with Story voice
+    storyVoiceSelect.value = e.target.value;
+};
+
+storyVoiceSelect.onchange = (e) => {
+    localStorage.setItem('preferredVoice', e.target.value);
+    // Sync with Audio Review voice
+    arVoiceSelect.value = e.target.value;
 };
 
 arControlBtn.onclick = toggleAudioReview;
@@ -1680,8 +1744,10 @@ oeQuestionSelector.onchange = (e) => {
 };
 
 nextStoryBtn.onclick = nextStorySegment;
+prevStoryBtn.onclick = prevStorySegment;
 startBuilderBtn.onclick = initSkeletonBuilder;
 checkStructureBtn.onclick = checkStructure;
+autoArrangeBtn.onclick = autoArrangeSkeleton;
 resetBuilderBtn.onclick = initSkeletonBuilder;
 restartStoryBtn.onclick = initStory;
 

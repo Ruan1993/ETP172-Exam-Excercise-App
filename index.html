@@ -334,6 +334,12 @@
           <!-- TTS Controls -->
           <div class="tts-controls">
             <div class="control-group">
+              <label for="story-voice-select">Select Voice:</label>
+              <select id="story-voice-select" class="oe-select">
+                <option value="">Loading voices...</option>
+              </select>
+            </div>
+            <div class="control-group">
               <label for="speech-rate">Speech Speed:</label>
               <input
                 type="range"
@@ -370,7 +376,10 @@
           </div>
 
           <div class="story-actions">
-            <button id="next-story-btn" class="btn-primary">Next</button>
+            <button id="prev-story-btn" class="btn-primary hidden">
+              ← Previous
+            </button>
+            <button id="next-story-btn" class="btn-primary">Next →</button>
             <button id="read-aloud-btn" class="btn-secondary">
               Read Aloud
             </button>
@@ -379,6 +388,9 @@
             </button>
             <button id="check-structure-btn" class="btn-primary hidden">
               Check Structure
+            </button>
+            <button id="auto-arrange-btn" class="btn-secondary hidden">
+              Arrange for me
             </button>
             <button id="read-structure-btn" class="btn-secondary hidden">
               Read Structure
