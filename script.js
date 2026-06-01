@@ -2,6 +2,58 @@
  * ETP172 Exam Preparation Application Data
  */
 const appData = {
+    studyMap: {
+        title: "ETP172 Exam Core Topics",
+        content: "ETP172 Exam",
+        children: [
+            {
+                content: "White Paper (1995)",
+                summary: "The first major post-apartheid education policy. Aimed to build a single, united national system and promote democratization.",
+                children: [
+                    { content: "Unified System", summary: "Eliminated 19 racially-divided departments to build one system for all." },
+                    { content: "Democratization", summary: "Established SGBs to give parents, teachers, and learners a say in governance." },
+                    { content: "Three Pillars", summary: "Redress (fixing the past), Equity (fairness), and Access (opening doors)." }
+                ]
+            },
+            {
+                content: "SAQA & NQF",
+                summary: "Statutory bodies that manage national standards and qualifications across all levels of learning.",
+                children: [
+                    { content: "SAQA", summary: "The authority that oversees the NQF and registers all qualifications." },
+                    { content: "NQF Purpose", summary: "To classify, register, and publish all national qualifications in an integrated system." },
+                    { content: "Mobility", summary: "Allows learners to move between academic and vocational paths easily." }
+                ]
+            },
+            {
+                content: "Critical Theory",
+                summary: "A framework for understanding power and inequality in education. Aims for emancipation and transformation.",
+                children: [
+                    { content: "Origins", summary: "Started at the Frankfurt School in 1930s Germany (Horkheimer, Adorno)." },
+                    { content: "Core Idea", summary: "Society is not neutral; truth is constructed by those in power." },
+                    { content: "Freire's Critique", summary: "Rejected the 'Banking Model' where students are passive containers." },
+                    { content: "Freire's Solution", summary: "Promoted 'Problem-Posing Education' and co-creation of knowledge." }
+                ]
+            },
+            {
+                content: "SA Context",
+                summary: "Applying theory to the South African landscape post-apartheid.",
+                children: [
+                    { content: "Bantu Education", summary: "A system designed to produce technocrats who just follow orders." },
+                    { content: "Hidden Curriculum", summary: "Unspoken lessons about power and race learned implicitly in schools." },
+                    { content: "Active Learning", summary: "Engaging students with real social issues like poverty and justice." }
+                ]
+            },
+            {
+                content: "Vygotsky",
+                summary: "Social constructivist who emphasized that learning is a social process.",
+                children: [
+                    { content: "ZPD", summary: "Zone of Proximal Development: The gap between what a learner can do alone vs with guidance." },
+                    { content: "MKO", summary: "More Knowledgeable Other: Someone who helps the learner cross the ZPD." },
+                    { content: "Scaffolding", summary: "Temporary support provided to help a student master a new concept." }
+                ]
+            }
+        ]
+    },
     quiz: [
         // --- Q1: White Paper (1995) and Transformation ---
         {
@@ -558,6 +610,7 @@ const screens = {
     story: document.getElementById('story-screen'),
     openEnded: document.getElementById('open-ended-screen'),
     audioReview: document.getElementById('audio-review-screen'),
+    studyMap: document.getElementById('study-map-screen'),
     results: document.getElementById('results-screen')
 };
 const navbar = document.getElementById('navbar');
@@ -568,6 +621,7 @@ const startQuizBtn = document.getElementById('start-quiz');
 const startStoryBtn = document.getElementById('start-story');
 const startSkeletonBtn = document.getElementById('start-skeleton');
 const startAudioReviewBtn = document.getElementById('start-audio-review');
+const startStudyMapBtn = document.getElementById('start-study-map');
 const startOpenEndedBtn = document.getElementById('start-open-ended');
 
 // Quiz
@@ -612,6 +666,12 @@ const arControlBtn = document.getElementById('ar-control-btn');
 const arPauseBtn = document.getElementById('ar-pause-btn');
 const arPrevBtn = document.getElementById('ar-prev-btn');
 const arNextBtn = document.getElementById('ar-next-btn');
+
+// Study Map
+const nodeModal = document.getElementById('node-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalBody = document.getElementById('modal-body');
+const closeModal = document.getElementById('close-modal');
 
 // Gamification
 const currentStreakEl = document.getElementById('current-streak');
@@ -1191,10 +1251,16 @@ function togglePauseResume() {
         arPauseBtn.textContent = "Resume";
         arStatusEl.textContent = "Paused";
     } else if (currentState.audioReview.isPaused) {
-        window.speechSynthesis.resume();
+        // If we were paused during speech, resume it
+        if (window.speechSynthesis.paused) {
+            window.speechSynthesis.resume();
+        }
         currentState.audioReview.isPaused = false;
         arPauseBtn.textContent = "Pause";
         arStatusEl.textContent = "Resumed";
+        
+        // If we were paused during a timer, we don't have a great way to resume the exact timer,
+        // but the loop checks isPaused before moving to the next step.
     }
 }
 
@@ -1204,6 +1270,19 @@ function playARSequence() {
     const question = currentState.audioReview.questions[currentState.audioReview.currentIndex];
     const correctOption = question.options.find(o => o.isCorrect);
 
+    // Helper to run next step with pause check
+    const runNext = (callback, delay) => {
+        currentState.audioReview.timeoutId = setTimeout(() => {
+            if (!currentState.audioReview.isPlaying) return;
+            if (currentState.audioReview.isPaused) {
+                // Check again in 100ms if still paused
+                runNext(callback, 100);
+            } else {
+                callback();
+            }
+        }, delay);
+    };
+
     // 1. Read Question
     arStatusEl.textContent = "Reading Question...";
     speakText(question.question, () => {
@@ -1211,9 +1290,7 @@ function playARSequence() {
 
         // 2. Pause 5 seconds (Thinking time)
         arStatusEl.textContent = "Thinking (5s)...";
-        currentState.audioReview.timeoutId = setTimeout(() => {
-            if (!currentState.audioReview.isPlaying) return;
-
+        runNext(() => {
             // 3. Show and Read Answer
             arAnswerBox.classList.remove('hidden');
             arAnswerTextEl.textContent = `${correctOption.text}. ${correctOption.rationale}`;
@@ -1225,9 +1302,7 @@ function playARSequence() {
                 // 4. Pause 5 seconds before next (if auto-play)
                 if (arAutoPlayToggle.checked) {
                     arStatusEl.textContent = "Next in 5s...";
-                    currentState.audioReview.timeoutId = setTimeout(() => {
-                        if (!currentState.audioReview.isPlaying) return;
-                        
+                    runNext(() => {
                         if (currentState.audioReview.currentIndex < currentState.audioReview.questions.length - 1) {
                             currentState.audioReview.currentIndex++;
                             renderARQuestion();
@@ -1244,7 +1319,7 @@ function playARSequence() {
                     arPauseBtn.classList.add('hidden');
                 }
             });
-        }, 5000); // 5-second thinking pause
+        }, 5000);
     }, arSpeechRateInput.value);
 }
 
@@ -1264,7 +1339,63 @@ function nextARQuestion() {
     }
 }
 
-function speakText(text, onEndCallback, rate = 0.8) {
+/**
+ * Study Map Logic
+ */
+let mm = null;
+
+function initStudyMap() {
+    showScreen('studyMap');
+    
+    const svg = document.querySelector('#mindmap-svg');
+    if (!mm) {
+        // Initialize Markmap
+        const { Markmap } = window.markmap;
+        mm = Markmap.create(svg, {
+            color: (node) => {
+                // Return colors matching the academic theme
+                if (node.depth === 0) return '#2c3e50'; // Primary
+                if (node.depth === 1) return '#3498db'; // Accent
+                return '#7f8c8d'; // Text muted
+            },
+            paddingX: 16,
+            autoFit: true,
+            toggleRecursively: true,
+        });
+
+        // Handle clicks on nodes
+        mm.options.callbacks = {
+            onNodeClick: (node) => {
+                if (node.data.summary) {
+                    showNodeDetail(node.data.content, node.data.summary);
+                }
+            }
+        };
+    }
+
+    // Load the data into markmap
+    mm.setData(appData.studyMap);
+    mm.fit();
+}
+
+function showNodeDetail(title, summary) {
+    modalTitle.textContent = title;
+    modalBody.innerHTML = `<p>${summary}</p>`;
+    nodeModal.classList.remove('hidden');
+}
+
+closeModal.onclick = () => {
+    nodeModal.classList.add('hidden');
+};
+
+// Close modal when clicking outside
+window.onclick = (event) => {
+    if (event.target === nodeModal) {
+        nodeModal.classList.add('hidden');
+    }
+};
+
+function speakText(text, onEndCallback, rate = 0.7) {
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
     
@@ -1409,6 +1540,7 @@ startQuizBtn.onclick = initQuiz;
 startStoryBtn.onclick = initStory;
 startSkeletonBtn.onclick = initSkeletonOnly;
 startAudioReviewBtn.onclick = initAudioReview;
+startStudyMapBtn.onclick = initStudyMap;
 startOpenEndedBtn.onclick = initOpenEnded;
 backToMenuBtn.onclick = () => showScreen('landing');
 
@@ -1443,6 +1575,12 @@ arControlBtn.onclick = toggleAudioReview;
 arPauseBtn.onclick = togglePauseResume;
 arPrevBtn.onclick = prevARQuestion;
 arNextBtn.onclick = nextARQuestion;
+
+arQuestionSelector.onchange = (e) => {
+    stopAudioReview();
+    currentState.audioReview.currentIndex = parseInt(e.target.value);
+    renderARQuestion();
+};
 
 arQuestionSelector.onchange = (e) => {
     stopAudioReview();

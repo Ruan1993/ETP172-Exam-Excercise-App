@@ -422,6 +422,75 @@ button {
     animation: fadeOut 0.5s ease-out forwards;
 }
 
+.map-container {
+    width: 100%;
+    height: calc(100vh - 250px);
+    min-height: 500px;
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+#mindmap-svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Markmap Overrides */
+.markmap-node {
+    cursor: pointer;
+}
+
+.markmap-node-text {
+    font-family: inherit !important;
+    font-size: 14px !important;
+    fill: var(--primary-color) !important;
+}
+
+/* Modal Styling */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+}
+
+.modal-content {
+    max-width: 500px;
+    position: relative;
+    animation: slideUpFade 0.3s ease;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+.close-btn:hover {
+    color: var(--error-color);
+}
+
+#modal-body {
+    line-height: 1.6;
+    margin-top: 15px;
+}
+
+.full-height {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 /* Footer */
 #main-footer {
     background-color: var(--primary-color);

@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ETP172 Exam Prep App</title>
     <link rel="stylesheet" href="style.css" />
+    <!-- Mind Map Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markmap-view"></script>
   </head>
   <body>
     <div id="app">
@@ -59,6 +62,13 @@
               <span class="btn-desc"
                 >Hands-free study: Question-Pause-Answer loop. Perfect for
                 driving.</span
+              >
+            </button>
+            <button id="start-study-map" class="btn-large">
+              <span class="btn-title">Interactive Study Map</span>
+              <span class="btn-desc"
+                >Visualize core topics and nested details in a dynamic mind
+                map.</span
               >
             </button>
             <button id="start-open-ended" class="btn-large">
@@ -259,6 +269,33 @@
           </div>
         </div>
       </section>
+
+      <!-- Study Map Screen -->
+      <section id="study-map-screen" class="screen hidden">
+        <div class="container full-height">
+          <div class="instruction-box">
+            <p>
+              <strong>Interactive Study Map:</strong> Explore the relationships
+              between core concepts. Click a node to expand/collapse or see a
+              detailed summary.
+            </p>
+          </div>
+          <div class="map-container card">
+            <svg id="mindmap-svg"></svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Node Detail Modal -->
+      <div id="node-modal" class="modal hidden">
+        <div class="modal-content card">
+          <span id="close-modal" class="close-btn">&times;</span>
+          <h2 id="modal-title">Concept Title</h2>
+          <div id="modal-body">
+            <p>Detailed summary will appear here...</p>
+          </div>
+        </div>
+      </div>
 
       <!-- Story Screen -->
       <section id="story-screen" class="screen hidden">
