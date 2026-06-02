@@ -599,30 +599,29 @@ const appData = {
             answer: "Vygotsky's theory and neuroplasticity are two sides of the same coin. Social constructivism describes the 'method' (learning through social interaction and guidance in the ZPD), while neuroplasticity describes the 'biological result'. When a student interacts with an MKO and exerts mental effort to cross their ZPD, that social and cognitive activity triggers the brain to physically create and strengthen the neural pathways required to master the new skill. Social interaction is the fuel for biological brain growth."
         }
     ],
-    story: [ 
-        "Critical Theory is an important approach in education that helps us understand how power, inequality, and injustice operate in schools.", 
-        "The theory started in Germany in the 1930s by the Frankfurt School. Key thinkers include Max Horkheimer, Theodor Adorno, Jurgen Habermas, Paulo Freire, and Peter McLaren.", 
-        "The theory says human societies are pathological, or 'sick'. We are like pawns in a chess game where the rules favour the rich and powerful.", 
-        "Power structures control not just society, but the way we think. There is no objective truth; all truth is constructed by those in power.", 
-        "It is a philosophy of cynicism and disillusionment. The main goal is emancipation—to free people from unfair systems.", 
-        "Paulo Freire criticised the 'banking model of education'. Teachers pour knowledge into passive students who just memorise facts.", 
-        "Instead, he promoted 'problem-posing education', where teachers and students work together to solve real-life problems.", 
-        "Critical Theory is very relevant in South Africa because of apartheid. Bantu Education turned learners into passive consumers and produced technocrats—people who just follow orders.", 
-        "Teachers must help learners reflect critically on society and expose the 'hidden curriculum'—the unspoken lessons about power, race, and class.", 
-        "Critical Theory supports active learning about real issues like poverty and discrimination. It matches the White Paper (1995) goals of redress, equity, and transformation.", 
-        "It has criticisms: it is very negative, cynical, and ideological. It rejects objective truth too strongly, which can confuse teachers following CAPS.", 
-        "In large South African classes, problem-posing methods are hard to use every day, and critics ask: if we replace capitalism, what do we replace it with?", 
-        "In conclusion, Critical Theory gives educators tools to challenge inequality. It supports South Africa’s transformation and helps create active citizens who build a fairer society."  
+    story: [
+        "Introduction: Critical Theory is an important approach in education that helps us understand how power, inequality and injustice operate in schools. This essay explains the origins and main ideas of Critical Theory, discusses how it can be applied in the South African education system, and examines some criticisms of the theory before reaching a conclusion.",
+        "Origins and Core Definitions: Critical Theory originated in Germany in the 1930s through the work of the Frankfurt School. Key thinkers associated with the theory include Max Horkheimer, Theodor Adorno, Jurgen Habermas, Paulo Freire and Peter McLaren.",
+        "Origins and Core Definitions: Critical Theory argues that society contains structural inequalities and systems of domination that disadvantage certain groups. It suggests that power structures influence not only social institutions but also the ways in which people think and understand the world. Critical theorists argue that knowledge and truth claims are often influenced by social, cultural and political power relations. The main goal of Critical Theory is emancipation, which means helping people become aware of and challenge unjust social systems.",
+        "Origins and Core Definitions: Paulo Freire criticised the banking model of education, where teachers deposit knowledge into passive learners who simply memorise information. Instead, he promoted problem-posing education, in which teachers and learners work together to investigate and solve real-world problems through dialogue and critical thinking.",
+        "Application in the Education System: Critical Theory is highly relevant in the South African context because of the legacy of apartheid. During apartheid, Bantu Education encouraged learners to accept existing social structures and often limited opportunities for critical thinking. Education was used to promote dominant ideologies that reinforced inequality.",
+        "Application in the Education System: Today, Critical Theory encourages teachers to help learners reflect critically on society and identify forms of inequality and injustice. It draws attention to the hidden curriculum, which refers to the unspoken messages about power, race, class and social expectations that learners may encounter at school. Critical Theory supports active learning and engagement with real-world issues such as poverty, discrimination and social exclusion.",
+        "Application in the Education System: In South Africa, Critical Theory also supports democratic education by encouraging learners to challenge inequality, racism, sexism and other forms of oppression while promoting social justice and active citizenship. These ideas align with the goals of educational transformation, redress and equity found in post-apartheid education policies. The theory aims to develop independent thinkers who can contribute to building a fairer and more democratic society.",
+        "Criticisms of Critical Theory: Despite its strengths, Critical Theory has several limitations. Critics argue that it focuses too heavily on oppression, conflict and social problems, sometimes at the expense of recognising positive social developments. Others claim that it does not always provide practical solutions for addressing the issues it identifies.",
+        "Criticisms of Critical Theory: Some critics also argue that Critical Theory places too much emphasis on conflict and oppression and not enough on individual responsibility and practical educational solutions. The theory’s challenge to traditional ideas about objectivity may create difficulties for teachers who are required to follow prescribed curricula such as CAPS. In addition, problem-posing approaches can be difficult to implement consistently in large classrooms with limited resources. Critics further question what alternative systems should replace those being criticised and argue that excessive focus on injustice may sometimes lead to feelings of pessimism among learners.",
+        "Conclusion: In conclusion, Critical Theory provides educators with valuable tools for understanding and challenging power, inequality and injustice in education. Although the theory has certain limitations, it has played an important role in supporting educational transformation in South Africa. By encouraging critical thinking, active citizenship and social justice, Critical Theory helps learners become informed and engaged members of a democratic society."
     ],
-    skeletonSummary: [ 
-        "Introduction: Power & Injustice in schools.", 
-        "Origins: Frankfurt School & Key Thinkers.", 
-        "Core Definitions: Pathological society & Emancipation.", 
-        "The Banking Model: Freire's Critique.", 
-        "SA Context: Bantu Education & Technocrats.", 
-        "Application: Hidden Curriculum & Active Learning.", 
-        "Criticisms: Negativity & Practicality.", 
-        "Conclusion: Building a fairer society." 
+    skeletonSummary: [
+        "Introduction: Explain origins, ideas, SA application & criticisms.",
+        "Origins: Frankfurt School (1930s Germany) & Key Thinkers.",
+        "Core Definitions: Structural inequalities, power structures & emancipation.",
+        "Freire's Contribution: Banking model critique & problem-posing education.",
+        "SA Application: Apartheid legacy & Bantu Education.",
+        "SA Application: Hidden curriculum & active learning.",
+        "SA Application: Democratic education, social justice & active citizenship.",
+        "Criticisms: Focus on oppression, lack of practical solutions.",
+        "Criticisms: Individual responsibility, CAPS challenges, large classes.",
+        "Conclusion: Valuable tools for transformation & building democracy."
     ]
 };
 
